@@ -2,6 +2,8 @@ package club.someoneice.vine.init;
 
 import club.someoneice.vine.common.item.Flagon;
 import club.someoneice.vine.common.item.Wine;
+import club.someoneice.vine.common.shaker.Cocktail;
+import club.someoneice.vine.common.shaker.ShakerItem;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,8 +15,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class ItemInit {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TskimiSeiranVine.MODID);
 
+    public static RegistryObject<Item> Shaker = ITEMS.register("shaker", ShakerItem::new);
     public static RegistryObject<Item> BrewingBarrelItem = ITEMS.register("brewing_barrel_item", () -> new BlockItem(BlockInit.BrewingBarrelBlock.get(), new Item.Properties().tab(TskimiSeiranVine.TAB)));
     public static RegistryObject<Item> DistillationBoilerItem = ITEMS.register("distillation_boiler_item", () -> new BlockItem(BlockInit.DistillationBoilerBlock.get(), new Item.Properties().tab(TskimiSeiranVine.TAB)));
+    public static RegistryObject<Item> Goblet = ITEMS.register("goblet_item", () -> new BlockItem(BlockInit.GobletBlock.get(), new Item.Properties().tab(TskimiSeiranVine.TAB)));
 
     public static RegistryObject<Item> Flagon = ITEMS.register("flagon", Flagon::new);
     public static RegistryObject<Item> Gourd = ITEMS.register("gourd", Flagon::new);
@@ -41,6 +45,11 @@ public class ItemInit {
     public static Wine Whiskey = new Wine("whiskey", 4);
     public static Wine Rum = new Wine("rum", 3);
     public static Wine Kwas = new Wine("kwas", 3);
+
+    public static RegistryObject<Item> NoneCocktail = ITEMS.register("none_cocktail_item", () -> new Cocktail.CocktailItem((Cocktail.CocktailBlock) BlockInit.NoneCocktail.get()));
+
+
+
 
     public static void init(IEventBus bus) {
         ITEMS.register(bus);

@@ -5,11 +5,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 public class DataList {
     private List<Item> list = new ArrayList<>();
+
+    public DataList(Item ... itemList) {
+        if (itemList.length > 12) list.addAll(Arrays.asList(itemList).subList(0, 12));
+        else list.addAll(List.of(itemList));
+    }
 
     public Item get(int slot) {
         return list.get(slot);
@@ -29,8 +35,10 @@ public class DataList {
     public void write(CompoundTag tag) {
         CompoundTag listTag = new CompoundTag();
         int i = 0;
-        for (Item item : list)
+        for (Item item : list) {
             listTag.put(Integer.toString(i), new ItemStack(item).save(new CompoundTag()));
+            i++;
+        }
         tag.put("itemList", listTag);
     }
 

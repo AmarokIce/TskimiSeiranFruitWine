@@ -1,6 +1,7 @@
 package club.someoneice.vine.core;
 
 import club.someoneice.vine.common.item.Wine;
+import club.someoneice.vine.common.shaker.Cocktail;
 import club.someoneice.vine.init.ItemInit;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -20,6 +21,9 @@ public class Data {
     // 蒸馏食谱
     public static final Map<Item, Wine> distillationItemMap = new HashMap<>();
     public static final Map<TagKey<Item>, Wine> distillationTagList = new HashMap<>();
+
+    // CockTail
+    public static final Map<DataList, Cocktail.CocktailItem> cocktailMap = new HashMap<>();
 
     public static final void init() {
         wineItemMap.put(Items.HONEY_BOTTLE, ItemInit.HoneyWine);
