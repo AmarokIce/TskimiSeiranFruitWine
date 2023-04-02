@@ -1,0 +1,47 @@
+{
+  "itemGroup.tskimi_seiran_fruit_vine": "月兰果酒",
+  "itemGroup.tskimi_seiran_fruit_vine.wine": "月兰果酒:鲜酿",
+
+  "tsfWine.puttsfWine.message": "现在准备酿造 :",
+  "tsfWine.get_wine_name.message": "容器中的酒品是 : ",
+  "tsfWine.has_wine.message": "酒水剩余 : ",
+  "tsfWine.get_win_progress.message": "酿造进度 : ",
+  "tsfWine.wine_num.message": "壶中剩余的酒水为 : ",
+
+  "block.tskimi_seiran_fruit_vine.brewing_barrel": "酿酒桶",
+
+  "item.tskimi_seiran_fruit_vine.flagon": "异域酒壶",
+  "item.tskimi_seiran_fruit_vine.gourd": "圆酒葫芦",
+  "item.tskimi_seiran_fruit_vine.cup": "木杯",
+  "item.tskimi_seiran_fruit_vine.wine_bottle": "酒瓶",
+
+  "item.tskimi_seiran_fruit_vine.apple_cider_bucket": "苹果酒",
+  "item.tskimi_seiran_fruit_vine.apple_cider_wine": "苹果酒",
+  "item.tskimi_seiran_fruit_vine.apple_cider_bottle": "苹果酒",
+  "item.tskimi_seiran_fruit_vine.apple_cider_cup": "苹果酒",
+
+  "item.tskimi_seiran_fruit_vine.milk_wine_bucket": "鲜奶酒",
+  "item.tskimi_seiran_fruit_vine.milk_wine_wine": "鲜奶酒",
+  "item.tskimi_seiran_fruit_vine.milk_wine_bottle": "鲜奶酒",
+  "item.tskimi_seiran_fruit_vine.milk_wine_cup": "鲜奶酒",
+
+  "item.tskimi_seiran_fruit_vine.honey_wine_bucket": "蜜酒",
+  "item.tskimi_seiran_fruit_vine.honey_wine_wine": "蜜酒",
+  "item.tskimi_seiran_fruit_vine.honey_wine_bottle": "蜜酒",
+  "item.tskimi_seiran_fruit_vine.honey_wine_cup": "蜜酒",
+
+  "item.tskimi_seiran_fruit_vine.berries_wine_bucket": "浆果酒",
+  "item.tskimi_seiran_fruit_vine.berries_wine_wine": "浆果酒",
+  "item.tskimi_seiran_fruit_vine.berries_wine_bottle": "浆果酒",
+  "item.tskimi_seiran_fruit_vine.berries_wine_cup": "浆果酒",
+
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_bucket": "发光浆果酒",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_wine": "发光浆果酒",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_bottle": "发光浆果酒",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_cup": "发光浆果酒",
+
+  "item.tskimi_seiran_fruit_vine.beer_bucket": "啤酒",
+  "item.tskimi_seiran_fruit_vine.beer_wine": "啤酒",
+  "item.tskimi_seiran_fruit_vine.beer_bottle": "啤酒",
+  "item.tskimi_seiran_fruit_vine.beer_cup": "啤酒"
+}

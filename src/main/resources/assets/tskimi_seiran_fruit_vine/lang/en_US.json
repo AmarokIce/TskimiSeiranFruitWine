@@ -1,0 +1,47 @@
+{
+  "itemGroup.tskimi_seiran_fruit_vine": "Tskimi Seiran Fruit Wine",
+  "itemGroup.tskimi_seiran_fruit_vine.wine": "Tskimi Seiran Fruit Wine : Wine",
+
+  "tsfWine.puttsfWine.message": "Now ready to make :",
+  "tsfWine.get_wine_name.message": "The wine in container is : ",
+  "tsfWine.has_wine.message": "The wine in container has : ",
+  "tsfWine.get_win_progress.message": "The progress in container : ",
+  "tsfWine.wine_num.message": "The wine in flagon has : ",
+
+  "block.tskimi_seiran_fruit_vine.brewing_barrel": "Brewing Barrel",
+
+  "item.tskimi_seiran_fruit_vine.flagon": "Flagon",
+  "item.tskimi_seiran_fruit_vine.gourd": "Gourd",
+  "item.tskimi_seiran_fruit_vine.cup": "Cup",
+  "item.tskimi_seiran_fruit_vine.wine_bottle": "Wine Bottle",
+
+  "item.tskimi_seiran_fruit_vine.apple_cider_bucket": "Apple Cider",
+  "item.tskimi_seiran_fruit_vine.apple_cider_wine": "Apple Cider",
+  "item.tskimi_seiran_fruit_vine.apple_cider_bottle": "Apple Cider",
+  "item.tskimi_seiran_fruit_vine.apple_cider_cup": "Apple Cider",
+
+  "item.tskimi_seiran_fruit_vine.milk_wine_bucket": "Milk Wine",
+  "item.tskimi_seiran_fruit_vine.milk_wine_wine": "Milk Wine",
+  "item.tskimi_seiran_fruit_vine.milk_wine_bottle": "Milk Wine",
+  "item.tskimi_seiran_fruit_vine.milk_wine_cup": "Milk Wine",
+
+  "item.tskimi_seiran_fruit_vine.honey_wine_bucket": "Honey Wine",
+  "item.tskimi_seiran_fruit_vine.honey_wine_wine": "Honey Wine",
+  "item.tskimi_seiran_fruit_vine.honey_wine_bottle": "Honey Wine",
+  "item.tskimi_seiran_fruit_vine.honey_wine_cup": "Honey Wine",
+
+  "item.tskimi_seiran_fruit_vine.berries_wine_bucket": "Berries Wine",
+  "item.tskimi_seiran_fruit_vine.berries_wine_wine": "Berries Wine",
+  "item.tskimi_seiran_fruit_vine.berries_wine_bottle": "Berries Wine",
+  "item.tskimi_seiran_fruit_vine.berries_wine_cup": "Berries Wine",
+
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_bucket": "Glow Berries Wine",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_wine": "Glow Berries Wine",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_bottle": "Glow Berries Wine",
+  "item.tskimi_seiran_fruit_vine.glow_berries_wine_cup": "Glow Berries Wine",
+
+  "item.tskimi_seiran_fruit_vine.beer_bucket": "Beer",
+  "item.tskimi_seiran_fruit_vine.beer_wine": "Beer",
+  "item.tskimi_seiran_fruit_vine.beer_bottle": "Beer",
+  "item.tskimi_seiran_fruit_vine.beer_cup": "Beer"
+}
