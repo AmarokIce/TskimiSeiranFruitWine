@@ -1,10 +1,14 @@
 package club.someoneice.vine.init;
 
+import club.someoneice.vine.common.shaker.CocktailBase;
 import club.someoneice.vine.common.item.Flagon;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.common.shaker.Cocktail;
 import club.someoneice.vine.common.shaker.ShakerItem;
 import club.someoneice.vine.core.TskimiSeiranVine;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -47,9 +51,17 @@ public class ItemInit {
     public static Wine Kwas = new Wine("kwas", 3);
 
     public static RegistryObject<Item> NoneCocktail = ITEMS.register("none_cocktail_item", () -> new Cocktail.CocktailItem((Cocktail.CocktailBlock) BlockInit.NoneCocktail.get()));
+    public static RegistryObject<Item> TskimiSeiran_S_Mystery = ITEMS.register("tskimi_seiran_mystery", () -> itemCocktailBase(10, MobEffects.JUMP, MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED));
 
-
-
+    private static Item itemCocktailBase(int hunger, MobEffect... effects) {
+        Item.Properties properties = new Item.Properties();
+        FoodProperties.Builder builder = new FoodProperties.Builder();
+        builder.nutrition(hunger);
+        builder.saturationMod((float) (hunger - 2));
+        builder.alwaysEat();
+        properties.tab(TskimiSeiranVine.COCKTAIL_TAB).stacksTo(1).food(builder.build());
+        return new CocktailBase(properties, effects);
+    }
 
     public static void init(IEventBus bus) {
         ITEMS.register(bus);

@@ -72,7 +72,7 @@ public class DistillationBoilerEntity extends BlockEntity {
     }
 
     public boolean isStart() {
-        return ((wine_type != null && hasWater && this.wine == 0));
+        return (wine_type != null && hasWater || this.wine > 0);
     }
 
     public int getWineProgress() {
@@ -89,14 +89,15 @@ public class DistillationBoilerEntity extends BlockEntity {
     }
 
     public static void tick(Level world, BlockPos pos, BlockState state, DistillationBoilerEntity entity) {
-        if (entity.isStart()) {
+        if (entity.isStart() && entity.wine == 0) {
+            world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             ++entity.time;
             if (entity.time >= 20 * 20) {
                 entity.time = 0;
                 entity.progress++;
 
-                if (entity.progress >= 100 && entity.wine == 0) {
+                if (entity.progress >= 100) {
                     entity.progress = 0;
                     entity.wine = 8;
                     entity.hasWater = false;

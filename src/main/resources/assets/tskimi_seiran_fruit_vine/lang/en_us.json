@@ -1,6 +1,7 @@
 {
   "itemGroup.tskimi_seiran_fruit_vine": "Tskimi Seiran Fruit Wine",
   "itemGroup.tskimi_seiran_fruit_vine.wine": "Tskimi Seiran Fruit Wine : Wine",
+  "itemGroup.tskimi_seiran_fruit_vine.cocktail": "Tskimi Seiran Fruit Wine : Cocktail",
 
   "tsfWine.puttsfWine.message": "Now ready to make :",
   "tsfWine.get_wine_name.message": "The wine in container is : ",
@@ -9,11 +10,35 @@
   "tsfWine.wine_num.message": "The wine in flagon has : ",
 
   "block.tskimi_seiran_fruit_vine.brewing_barrel": "Brewing Barrel",
+  "block.tskimi_seiran_fruit_vine.distillation_boiler": "Distillation Boiler",
 
+  "block.tskimi_seiran_fruit_vine.shaker": "Shaker",
   "item.tskimi_seiran_fruit_vine.flagon": "Flagon",
   "item.tskimi_seiran_fruit_vine.gourd": "Gourd",
   "item.tskimi_seiran_fruit_vine.cup": "Cup",
   "item.tskimi_seiran_fruit_vine.wine_bottle": "Wine Bottle",
+  "block.tskimi_seiran_fruit_vine.goblet": "Goblet",
+  "block.tskimi_seiran_fruit_vine.none_cocktail": " Mystery Drink",
+  "item.tskimi_seiran_fruit_vine.tskimi_seiran_mystery": "Rskimi Seiran's Mystery Drink",
+
+  "tsfWine.apple_cider": "Apple Cider",
+  "tsfWine.milk_wine": "Milk Wine",
+  "tsfWine.honey_wine": "Honey Wine",
+  "tsfWine.berries_wine": "Berries Wine",
+  "tsfWine.glow_berries_wine": "Glow Berries Wine",
+  "tsfWine.beer": "Beer",
+  "tsfWine.cherry": "Cherry Wine",
+  "tsfWine.peach": "Peach Wine",
+  "tsfWine.pineapple": "Pineapple Wine",
+  "tsfWine.lemon": "Coconut Wine",
+  "tsfWine.coconut": "Lemon Wine",
+  "tsfWine.coconut": "Strawberry Wine",
+  "tsfWine.pear": "Pear Wine",
+  "tsfWine.strawberry": "Strawberry Wine",
+  "tsfWine.vodka": "Vodka",
+  "tsfWine.whiskey": "Whiskey",
+  "tsfWine.rum": "Rum",
+  "tsfWine.kwas": "Kwas",
 
   "item.tskimi_seiran_fruit_vine.apple_cider_bucket": "Apple Cider",
   "item.tskimi_seiran_fruit_vine.apple_cider_wine": "Apple Cider",
@@ -43,5 +68,60 @@
   "item.tskimi_seiran_fruit_vine.beer_bucket": "Beer",
   "item.tskimi_seiran_fruit_vine.beer_wine": "Beer",
   "item.tskimi_seiran_fruit_vine.beer_bottle": "Beer",
-  "item.tskimi_seiran_fruit_vine.beer_cup": "Beer"
+  "item.tskimi_seiran_fruit_vine.beer_cup": "Beer",
+
+  "item.tskimi_seiran_fruit_vine.cherry_bucket": "Cherry Wine",
+  "item.tskimi_seiran_fruit_vine.cherry_wine": "Cherry Wine",
+  "item.tskimi_seiran_fruit_vine.cherry_bottle": "Cherry Wine",
+  "item.tskimi_seiran_fruit_vine.cherry_cup": "Cherry Wine",
+
+  "item.tskimi_seiran_fruit_vine.peach_bucket": "Peach Wine",
+  "item.tskimi_seiran_fruit_vine.peach_wine": "Peach Wine",
+  "item.tskimi_seiran_fruit_vine.peach_bottle": "Peach Wine",
+  "item.tskimi_seiran_fruit_vine.peach_cup": "Peach Wine",
+
+  "item.tskimi_seiran_fruit_vine.pineapple_bucket": "Pineapple Wine",
+  "item.tskimi_seiran_fruit_vine.pineapple_wine": "Pineapple Wine",
+  "item.tskimi_seiran_fruit_vine.pineapple_bottle": "Pineapple Wine",
+  "item.tskimi_seiran_fruit_vine.pineapple_cup": "Pineapple Wine",
+
+  "item.tskimi_seiran_fruit_vine.coconut_bucket": "Coconut Wine",
+  "item.tskimi_seiran_fruit_vine.coconut_wine": "Coconut Wine",
+  "item.tskimi_seiran_fruit_vine.coconut_bottle": "Coconut Wine",
+  "item.tskimi_seiran_fruit_vine.coconut_cup": "Coconut Wine",
+
+  "item.tskimi_seiran_fruit_vine.lemon_bucket": "Lemon Wine",
+  "item.tskimi_seiran_fruit_vine.lemon_wine": "Lemon Wine",
+  "item.tskimi_seiran_fruit_vine.lemon_bottle": "Lemon Wine",
+  "item.tskimi_seiran_fruit_vine.lemon_cup": "Lemon Wine",
+
+  "item.tskimi_seiran_fruit_vine.strawberry_bucket": "Strawberry Wine",
+  "item.tskimi_seiran_fruit_vine.strawberry_wine": "Strawberry Wine",
+  "item.tskimi_seiran_fruit_vine.strawberry_bottle": "Strawberry Wine",
+  "item.tskimi_seiran_fruit_vine.strawberry_cup": "Strawberry Wine",
+
+  "item.tskimi_seiran_fruit_vine.pear_bucket": "Pear Wine",
+  "item.tskimi_seiran_fruit_vine.pear_wine": "Pear Wine",
+  "item.tskimi_seiran_fruit_vine.pear_bottle": "Pear Wine",
+  "item.tskimi_seiran_fruit_vine.pear_cup": "Pear Wine",
+
+  "item.tskimi_seiran_fruit_vine.vodka_bucket": "Vodka",
+  "item.tskimi_seiran_fruit_vine.vodka_wine": "Vodka",
+  "item.tskimi_seiran_fruit_vine.vodka_bottle": "Vodka",
+  "item.tskimi_seiran_fruit_vine.vodka_cup": "Vodka",
+
+  "item.tskimi_seiran_fruit_vine.whiskey_bucket": "Whiskey",
+  "item.tskimi_seiran_fruit_vine.whiskey_wine": "Whiskey",
+  "item.tskimi_seiran_fruit_vine.whiskey_bottle": "Whiskey",
+  "item.tskimi_seiran_fruit_vine.whiskey_cup": "Whiskey",
+
+  "item.tskimi_seiran_fruit_vine.rum_bucket": "Rum",
+  "item.tskimi_seiran_fruit_vine.rum_wine": "Rum",
+  "item.tskimi_seiran_fruit_vine.rum_bottle": "Rum",
+  "item.tskimi_seiran_fruit_vine.rum_cup": "Rum",
+
+  "item.tskimi_seiran_fruit_vine.kwas_bucket": "Kwas",
+  "item.tskimi_seiran_fruit_vine.kwas_wine": "Kwas",
+  "item.tskimi_seiran_fruit_vine.kwas_bottle": "Kwas",
+  "item.tskimi_seiran_fruit_vine.kwas_cup": "Kwas"
 }

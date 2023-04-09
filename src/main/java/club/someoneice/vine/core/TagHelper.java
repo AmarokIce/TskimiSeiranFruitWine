@@ -4,6 +4,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 public class TagHelper {
     public static final TagKey<Item> Strawberry = bind("fruits/strawberry");

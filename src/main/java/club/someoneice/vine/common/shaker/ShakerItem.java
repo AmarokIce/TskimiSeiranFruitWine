@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.UUID;
@@ -30,38 +31,32 @@ public class ShakerItem extends BlockItem {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         var nbt = context.getItemInHand().getOrCreateTag();
-        if (context.getPlayer().isShiftKeyDown()) {
-            if (!nbt.contains("shaker")) return super.useOn(context);
-            context.getLevel().playSound(null, context.getPlayer().getX(), context.getPlayer().getY(), context.getPlayer().getZ(), SoundEvents.HONEY_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
-            nbt.putInt("shake_time", nbt.getInt("shake_time") + 1);
-            if (nbt.getInt("shake_time") == 8) {
-                context.getLevel().playSound(null, context.getPlayer().getX(), context.getPlayer().getY(), context.getPlayer().getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                var tag = nbt.getCompound("shaker");
-                DataList data = new DataList();
-                data.read(tag);
-                boolean hasCocktail = false;
-                for (DataList list : Data.cocktailMap.keySet()) if (data.isSame(list)) {
-                    tag.put("cocktail", new ItemStack(Data.cocktailMap.get(list)).save(new CompoundTag()));
-                    hasCocktail = true;
-                    break;
-                }
-                if (!hasCocktail)
-                    tag.put("cocktail", new ItemStack(ItemInit.NoneCocktail.get()).save(new CompoundTag()));
+        if (nbt.getInt("shake_time") >= 8 && context.getLevel().getBlockState(context.getClickedPos()).is(BlockInit.GobletBlock.get())) {
+            var block = (ItemStack.of(nbt.getCompound("cocktail")).getItem());
+            if (!nbt.contains("cocktail") || block.getDefaultInstance().sameItem(ItemStack.EMPTY))
+                return InteractionResult.FAIL;
 
-                nbt.put("shaker", tag);
+            if (block instanceof BlockItem bk) {
+                context.getLevel().setBlock(context.getClickedPos(), bk.getBlock().defaultBlockState(), 0);
+                context.getLevel().gameEvent(GameEvent.BLOCK_CHANGE, context.getClickedPos());
+            } else {
+                context.getPlayer().addItem(block.getDefaultInstance());
+                context.getLevel().removeBlock(context.getClickedPos(), true);
+                context.getLevel().gameEvent(GameEvent.BLOCK_DESTROY, context.getClickedPos());
             }
 
+            nbt.remove("cocktail");
+            nbt.remove("shaker_time");
             return InteractionResult.SUCCESS;
         }
 
-        if (context.getLevel().getBlockState(context.getClickedPos()).is(BlockInit.GobletBlock.get())) {
-            if (!nbt.contains("shaker") || ItemStack.of(nbt.getCompound("shaker").getCompound("cocktail")).sameItem(ItemStack.EMPTY))
-                return InteractionResult.FAIL;
+        if (nbt.contains("cocktail") && !ItemStack.of(nbt.getCompound("cocktail")).sameItem(ItemStack.EMPTY)) {
+            if (ItemStack.of(nbt.getCompound("cocktail")).sameItem(ItemStack.EMPTY)) return super.useOn(context);
+            context.getLevel().playSound(null, context.getPlayer().getX(), context.getPlayer().getY(), context.getPlayer().getZ(), SoundEvents.HONEY_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
+            nbt.putInt("shake_time", nbt.getInt("shake_time") + 1);
+            if (nbt.getInt("shake_time") == 8)
+                context.getLevel().playSound(null, context.getPlayer().getX(), context.getPlayer().getY(), context.getPlayer().getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
 
-            var block = ((Cocktail.CocktailItem) ItemStack.of(nbt.getCompound("shaker").getCompound("cocktail")).getItem()).getBlock();
-            context.getLevel().setBlock(context.getClickedPos(), block.defaultBlockState(), 0);
-            context.getLevel().gameEvent(GameEvent.BLOCK_CHANGE, context.getClickedPos());
-            nbt.remove("shaker");
             return InteractionResult.SUCCESS;
         }
 
@@ -72,12 +67,12 @@ public class ShakerItem extends BlockItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         var item = player.getItemInHand(hand);
         var nbt = item.getOrCreateTag();
-        if (player.isShiftKeyDown() && nbt.contains("shaker")) {
+        if (nbt.contains("cocktail") && !ItemStack.of(nbt.getCompound("cocktail")).sameItem(ItemStack.EMPTY)) {
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.HONEY_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
             nbt.putInt("shake_time", nbt.getInt("shake_time") + 1);
             if (nbt.getInt("shake_time") == 8) {
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                var tag = nbt.getCompound("shaker");
+                var tag = nbt.getCompound("cocktail");
                 DataList data = new DataList();
                 data.read(tag);
                 boolean hasCocktail = false;

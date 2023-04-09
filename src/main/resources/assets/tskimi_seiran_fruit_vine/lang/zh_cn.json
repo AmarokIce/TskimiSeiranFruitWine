@@ -1,6 +1,7 @@
 {
   "itemGroup.tskimi_seiran_fruit_vine": "月兰果酒",
   "itemGroup.tskimi_seiran_fruit_vine.wine": "月兰果酒:鲜酿",
+  "itemGroup.tskimi_seiran_fruit_vine.cocktail": "月兰果酒:调酒",
 
   "tsfWine.puttsfWine.message": "现在准备酿造 :",
   "tsfWine.get_wine_name.message": "容器中的酒品是 : ",
@@ -9,11 +10,34 @@
   "tsfWine.wine_num.message": "壶中剩余的酒水为 : ",
 
   "block.tskimi_seiran_fruit_vine.brewing_barrel": "酿酒桶",
+  "block.tskimi_seiran_fruit_vine.distillation_boiler": "蒸馏锅",
 
+  "block.tskimi_seiran_fruit_vine.shaker": "雪克杯",
   "item.tskimi_seiran_fruit_vine.flagon": "异域酒壶",
   "item.tskimi_seiran_fruit_vine.gourd": "圆酒葫芦",
   "item.tskimi_seiran_fruit_vine.cup": "木杯",
   "item.tskimi_seiran_fruit_vine.wine_bottle": "酒瓶",
+  "block.tskimi_seiran_fruit_vine.goblet": "高脚杯",
+  "block.tskimi_seiran_fruit_vine.none_cocktail": "神秘鲜酿",
+  "item.tskimi_seiran_fruit_vine.tskimi_seiran_mystery": "月见清兰的奇妙特调",
+
+  "tsfWine.apple_cider": "苹果酒",
+  "tsfWine.milk_wine": "鲜奶酒",
+  "tsfWine.honey_wine": "蜜酒",
+  "tsfWine.berries_wine": "浆果酒",
+  "tsfWine.glow_berries_wine": "发光浆果酒",
+  "tsfWine.beer": "啤酒",
+  "tsfWine.cherry": "樱桃甜酒",
+  "tsfWine.peach": "桃子酒",
+  "tsfWine.pineapple": "菠萝蜜酒",
+  "tsfWine.lemon": "椰子酒",
+  "tsfWine.coconut": "柠檬甜酒",
+  "tsfWine.pear": "梨酒",
+  "tsfWine.strawberry": "草莓甜酒",
+  "tsfWine.vodka": "伏特加",
+  "tsfWine.whiskey": "威士忌",
+  "tsfWine.rum": "金朗姆",
+  "tsfWine.kwas":"格拉瓦",
 
   "item.tskimi_seiran_fruit_vine.apple_cider_bucket": "苹果酒",
   "item.tskimi_seiran_fruit_vine.apple_cider_wine": "苹果酒",
@@ -43,5 +67,60 @@
   "item.tskimi_seiran_fruit_vine.beer_bucket": "啤酒",
   "item.tskimi_seiran_fruit_vine.beer_wine": "啤酒",
   "item.tskimi_seiran_fruit_vine.beer_bottle": "啤酒",
-  "item.tskimi_seiran_fruit_vine.beer_cup": "啤酒"
+  "item.tskimi_seiran_fruit_vine.beer_cup": "啤酒",
+
+  "item.tskimi_seiran_fruit_vine.cherry_bucket": "樱桃甜酒",
+  "item.tskimi_seiran_fruit_vine.cherry_wine": "樱桃甜酒",
+  "item.tskimi_seiran_fruit_vine.cherry_bottle": "樱桃甜酒",
+  "item.tskimi_seiran_fruit_vine.cherry_cup": "樱桃甜酒",
+
+  "item.tskimi_seiran_fruit_vine.peach_bucket": "桃子酒",
+  "item.tskimi_seiran_fruit_vine.peach_wine": "桃子酒",
+  "item.tskimi_seiran_fruit_vine.peach_bottle": "桃子酒",
+  "item.tskimi_seiran_fruit_vine.peach_cup": "桃子酒",
+
+  "item.tskimi_seiran_fruit_vine.pineapple_bucket": "菠萝蜜酒",
+  "item.tskimi_seiran_fruit_vine.pineapple_wine": "菠萝蜜酒",
+  "item.tskimi_seiran_fruit_vine.pineapple_bottle": "菠萝蜜酒",
+  "item.tskimi_seiran_fruit_vine.pineapple_cup": "菠萝蜜酒",
+
+  "item.tskimi_seiran_fruit_vine.coconut_bucket": "椰子酒",
+  "item.tskimi_seiran_fruit_vine.coconut_wine": "椰子酒",
+  "item.tskimi_seiran_fruit_vine.coconut_bottle": "椰子酒",
+  "item.tskimi_seiran_fruit_vine.coconut_cup": "椰子酒",
+
+  "item.tskimi_seiran_fruit_vine.lemon_bucket": "柠檬甜酒",
+  "item.tskimi_seiran_fruit_vine.lemon_wine": "柠檬甜酒",
+  "item.tskimi_seiran_fruit_vine.lemon_bottle": "柠檬甜酒",
+  "item.tskimi_seiran_fruit_vine.lemon_cup": "柠檬甜酒",
+
+  "item.tskimi_seiran_fruit_vine.strawberry_bucket": "草莓甜酒",
+  "item.tskimi_seiran_fruit_vine.strawberry_wine": "草莓甜酒",
+  "item.tskimi_seiran_fruit_vine.strawberry_bottle": "草莓甜酒",
+  "item.tskimi_seiran_fruit_vine.strawberry_cup": "草莓甜酒",
+
+  "item.tskimi_seiran_fruit_vine.pear_bucket": "梨酒",
+  "item.tskimi_seiran_fruit_vine.pear_wine": "梨酒",
+  "item.tskimi_seiran_fruit_vine.pear_bottle": "梨酒",
+  "item.tskimi_seiran_fruit_vine.pear_cup": "梨酒",
+
+  "item.tskimi_seiran_fruit_vine.vodka_bucket": "伏特加",
+  "item.tskimi_seiran_fruit_vine.vodka_wine": "伏特加",
+  "item.tskimi_seiran_fruit_vine.vodka_bottle": "伏特加",
+  "item.tskimi_seiran_fruit_vine.vodka_cup": "伏特加",
+
+  "item.tskimi_seiran_fruit_vine.whiskey_bucket": "威士忌",
+  "item.tskimi_seiran_fruit_vine.whiskey_wine": "威士忌",
+  "item.tskimi_seiran_fruit_vine.whiskey_bottle": "威士忌",
+  "item.tskimi_seiran_fruit_vine.whiskey_cup": "威士忌",
+
+  "item.tskimi_seiran_fruit_vine.rum_bucket": "金朗姆",
+  "item.tskimi_seiran_fruit_vine.rum_wine": "金朗姆",
+  "item.tskimi_seiran_fruit_vine.rum_bottle": "金朗姆",
+  "item.tskimi_seiran_fruit_vine.rum_cup": "金朗姆",
+
+  "item.tskimi_seiran_fruit_vine.kwas_bucket": "格拉瓦",
+  "item.tskimi_seiran_fruit_vine.kwas_wine": "格拉瓦",
+  "item.tskimi_seiran_fruit_vine.kwas_bottle": "格拉瓦",
+  "item.tskimi_seiran_fruit_vine.kwas_cup": "格拉瓦"
 }

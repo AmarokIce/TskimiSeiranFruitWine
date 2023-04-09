@@ -94,7 +94,7 @@ public class BrewingBarrelEntity extends BlockEntity {
     }
 
     public boolean isStart() {
-        return ((wine_type != null && hasWater && this.wine == 0));
+        return (wine_type != null && hasWater || this.wine > 0);
     }
 
     public int getWineLevel() {
@@ -106,13 +106,13 @@ public class BrewingBarrelEntity extends BlockEntity {
     }
 
     public static void tick(Level world, BlockPos pos, BlockState state, BrewingBarrelEntity entity) {
-        if (entity.isStart()) {
+        if (entity.isStart() && entity.wine == 0) {
             ++entity.time;
             if (entity.time >= 20 * 10) {
                 entity.time = 0;
                 entity.progress++;
 
-                if (entity.progress >= 100 && entity.wine == 0) {
+                if (entity.progress >= 100) {
                     entity.progress = 0;
                     entity.wine = 8;
                     entity.hasWater = false;

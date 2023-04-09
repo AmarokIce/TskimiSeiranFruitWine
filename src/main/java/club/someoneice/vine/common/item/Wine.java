@@ -3,6 +3,8 @@ package club.someoneice.vine.common.item;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.ItemInit;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -20,14 +22,14 @@ public class Wine {
     public RegistryObject<Item> wineBottle;
     public String name;
 
-
-    // TODO - CUP and WINEBOTTLE is null!
     public Wine(String name, int hunger) {
         this.name   = "tsfWine." + name;
+
         bucket      = ItemInit.ITEMS.register(name + "_bucket",      () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger * 4), Items.BUCKET));
         wineBottle  = ItemInit.ITEMS.register(name + "_wine",        () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger * 4), ItemInit.WineBottle.get()));
         bottle      = ItemInit.ITEMS.register(name + "_bottle",      () -> new WineItem(WineEnum.BOTTLE, name, WineItem.propertiesHelper(hunger), Items.GLASS_BOTTLE));
         cup         = ItemInit.ITEMS.register(name + "_cup",         () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()));
+
         Data.wineMap.put("tsfWine." + name, this);
     }
 

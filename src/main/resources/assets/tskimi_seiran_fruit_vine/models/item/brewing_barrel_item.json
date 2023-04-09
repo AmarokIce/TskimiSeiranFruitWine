@@ -1,6 +1,4 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "tskimi_seiran_fruit_vine:item/brewing_barrel_item"
-  }
+  "parent": "tskimi_seiran_fruit_vine:block/brewing_barrel"
 }
+

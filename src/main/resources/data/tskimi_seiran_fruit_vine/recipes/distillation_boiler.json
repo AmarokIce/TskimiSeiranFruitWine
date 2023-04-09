@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xbx",
+    "ogo"
+  ],
+
+  "key": {
+    "o": {
+      "item": "minecraft:bricks"
+    },
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "g": {
+      "item": "minecraft:cauldron"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "result": {
+    "item": "tskimi_seiran_fruit_vine:distillation_boiler_item"
+  }
+}

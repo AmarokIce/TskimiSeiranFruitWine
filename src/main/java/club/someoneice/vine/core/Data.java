@@ -1,7 +1,6 @@
 package club.someoneice.vine.core;
 
 import club.someoneice.vine.common.item.Wine;
-import club.someoneice.vine.common.shaker.Cocktail;
 import club.someoneice.vine.init.ItemInit;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -23,9 +22,9 @@ public class Data {
     public static final Map<TagKey<Item>, Wine> distillationTagList = new HashMap<>();
 
     // CockTail
-    public static final Map<DataList, Cocktail.CocktailItem> cocktailMap = new HashMap<>();
+    public static final Map<DataList, Item> cocktailMap = new HashMap<>();
 
-    public static final void init() {
+    public static void init() {
         wineItemMap.put(Items.HONEY_BOTTLE, ItemInit.HoneyWine);
         wineItemMap.put(Items.WHEAT, ItemInit.Beer);
         wineItemMap.put(Items.SWEET_BERRIES, ItemInit.BerriesWine);
@@ -42,8 +41,18 @@ public class Data {
         wineTagList.put(TagHelper.Strawberry, ItemInit.Strawberry);
         wineTagList.put(TagHelper.Coconut, ItemInit.Coconut);
 
+        /*
+        wineItemMap.put(Content.CHERRY.m_5456_(), ItemInit.Cherry);
+        wineItemMap.put(Content.PINEAPPLE.m_5456_(), ItemInit.Pineapple);
+        wineItemMap.put(Content.LEMON.m_5456_(), ItemInit.Lemon);
+        wineItemMap.put(Content.PEAR.m_5456_(), ItemInit.Pear);
+        wineItemMap.put(Content.PEACH.m_5456_(), ItemInit.Peach);
+        wineItemMap.put(Content.STRAWBERRY.m_5456_(), ItemInit.Strawberry);
+        wineItemMap.put(Content.COCONUT.m_5456_(), ItemInit.Coconut);
+        */
+
         distillationItemMap.put(Items.SUGAR_CANE, ItemInit.Rum);
         distillationItemMap.put(Items.POTATO, ItemInit.Vodka);
         distillationItemMap.put(Items.WHEAT, ItemInit.Whiskey);
-    }
+        }
 }

@@ -15,13 +15,20 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cocktail {
     public static class CocktailBlock extends Block {
@@ -42,6 +49,18 @@ public class Cocktail {
             }
 
             return InteractionResult.SUCCESS;
+        }
+
+        @Override
+        public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
+            var itemList = new ArrayList<ItemStack>();
+            itemList.add(new ItemStack(this.asItem()));
+            return itemList;
+        }
+
+        @Override
+        public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+            return Block.box(6, 0, 6, 10, 6, 10);
         }
 
         @Override
@@ -72,7 +91,7 @@ public class Cocktail {
             builder.saturationMod(Math.max(hunger - 2, 0));
             builder.alwaysEat();
             properties.food(builder.build());
-            properties.tab(TskimiSeiranVine.WINE_TAB);
+            properties.tab(TskimiSeiranVine.COCKTAIL_TAB);
             properties.stacksTo(8);
             return properties;
         }

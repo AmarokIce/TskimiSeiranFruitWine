@@ -6,6 +6,8 @@ import club.someoneice.vine.init.TileInit;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -34,11 +36,11 @@ public class TskimiSeiranVine {
         }
     };
 
-    public static final CreativeModeTab COOKTAIL_TAB = new CreativeModeTab(MODID + ".cocktail") {
+    public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MODID + ".cocktail") {
         @Nonnull @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ItemInit.Cider.cup.get());
-        } // TODO
+            return new ItemStack(ItemInit.NoneCocktail.get());
+        }
     };
 
     public TskimiSeiranVine() {
@@ -53,5 +55,22 @@ public class TskimiSeiranVine {
         // Data init.
         new TagHelper();
         Data.init();
+    }
+
+    @SubscribeEvent
+    public void serverinit(ServerStartedEvent event) {
+        // Delay incoming in, or make a crash.
+        data();
+    }
+
+    private void data() {
+
+
+        Data.cocktailMap.put(new DataList(
+                        ItemInit.Peach.bottle.get(), ItemInit.Peach.bottle.get(), ItemInit.Peach.bottle.get(),
+                        ItemInit.Whiskey.bottle.get(), ItemInit.Whiskey.bottle.get(), ItemInit.Whiskey.bottle.get(),
+                        ItemInit.Vodka.bottle.get(), ItemInit.Vodka.bottle.get(), ItemInit.Vodka.bottle.get()),
+                ItemInit.TskimiSeiran_S_Mystery.get()
+        );
     }
 }
