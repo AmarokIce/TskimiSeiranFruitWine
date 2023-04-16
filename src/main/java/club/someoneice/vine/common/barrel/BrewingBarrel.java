@@ -78,6 +78,10 @@ public class BrewingBarrel extends BaseEntityBlock {
                         item.shrink(1);
                         player.addItem(new ItemStack(entity.getWine().wineBottle.get()));
                         entity.wine -= 4;
+                    } else if (item.getItem() == ItemInit.GlassBottle.get()) {
+                        item.shrink(1);
+                        player.addItem(new ItemStack(entity.getWine().glass.get()));
+                        entity.wine -= 1;
                     }
 
                     if (entity.wine == 0) {

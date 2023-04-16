@@ -1,6 +1,6 @@
 package club.someoneice.vine.common.shaker;
 
-import club.someoneice.vine.core.DataList;
+import club.someoneice.vine.core.DataMap;
 import club.someoneice.vine.init.TileInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,12 +10,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ShakerTile extends BlockEntity {
     ItemStack cocktail;
-    DataList list;
+    DataMap list;
 
     public ShakerTile(BlockPos p_155229_, BlockState p_155230_) {
         super(TileInit.SheckerTile.get(), p_155229_, p_155230_);
         cocktail = ItemStack.EMPTY;
-        list = new DataList();
+        list = new DataMap();
     }
 
     @Override

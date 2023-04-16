@@ -1,12 +1,7 @@
 package club.someoneice.vine.common.shaker;
 
-import club.someoneice.vine.core.Data;
-import club.someoneice.vine.core.DataList;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
-import club.someoneice.vine.init.ItemInit;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -18,10 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
-
-import java.util.UUID;
 
 public class ShakerItem extends BlockItem {
     public ShakerItem() {
@@ -70,20 +62,8 @@ public class ShakerItem extends BlockItem {
         if (nbt.contains("cocktail") && !ItemStack.of(nbt.getCompound("cocktail")).sameItem(ItemStack.EMPTY)) {
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.HONEY_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
             nbt.putInt("shake_time", nbt.getInt("shake_time") + 1);
-            if (nbt.getInt("shake_time") == 8) {
+            if (nbt.getInt("shake_time") == 8)
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                var tag = nbt.getCompound("cocktail");
-                DataList data = new DataList();
-                data.read(tag);
-                boolean hasCocktail = false;
-                for (DataList list : Data.cocktailMap.keySet()) if (data.isSame(list)) {
-                    tag.put("cocktail", new ItemStack(Data.cocktailMap.get(list)).save(new CompoundTag()));
-                    hasCocktail = true;
-                    break;
-                }
-                if (!hasCocktail)
-                    tag.put("cocktail", new ItemStack(ItemInit.NoneCocktail.get()).save(new CompoundTag()));
-            }
         }
         return InteractionResultHolder.success(item);
     }

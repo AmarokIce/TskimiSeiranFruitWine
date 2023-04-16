@@ -3,7 +3,7 @@ package club.someoneice.vine.init;
 import club.someoneice.vine.common.Goblet;
 import club.someoneice.vine.common.barrel.BrewingBarrel;
 import club.someoneice.vine.common.boilers.DistillationBoiler;
-import club.someoneice.vine.common.shaker.Cocktail;
+import club.someoneice.vine.common.cocktail.Cocktail;
 import club.someoneice.vine.common.shaker.Shaker;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import net.minecraft.world.level.block.Block;

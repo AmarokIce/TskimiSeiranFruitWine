@@ -1,14 +1,17 @@
 package club.someoneice.vine.common.boilers;
 
-import club.someoneice.vine.common.barrel.BrewingBarrelEntity;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
+import club.someoneice.vine.core.TagHelper;
 import club.someoneice.vine.init.TileInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -79,7 +82,34 @@ public class DistillationBoilerEntity extends BlockEntity {
         return this.progress;
     }
 
-    public boolean setWine(ItemStack item) {
+    public boolean setWine(Level world, BlockPos pos, ItemStack item) {
+        if (!world.isClientSide) {
+            var block = world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()));
+            if (block.is(Blocks.CAMPFIRE) || block.is(Blocks.SOUL_CAMPFIRE) || block.is(Blocks.FIRE) || block.is(Blocks.SOUL_CAMPFIRE))
+                return setWineWithDistillation(item);
+            else return setWineWithFerment(item);
+        }
+
+        return false;
+    }
+
+    private boolean setWineWithFerment(ItemStack item) {
+        if (Data.wineItemMap.containsKey(item.getItem())) {
+            this.wine_type = Data.wineItemMap.get(item.getItem());
+            return true;
+        } else {
+            for (TagKey<Item> tag : Data.wineTagList.keySet()) {
+                if (item.is(tag)) {
+                    this.wine_type = Data.wineTagList.get(tag);
+                    if (tag == TagHelper.Milk) this.setWater();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean setWineWithDistillation(ItemStack item) {
         if (Data.distillationItemMap.containsKey(item.getItem())) {
             this.wine_type = Data.distillationItemMap.get(item.getItem());
             return true;
@@ -93,7 +123,7 @@ public class DistillationBoilerEntity extends BlockEntity {
             world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             ++entity.time;
-            if (entity.time >= 20 * 20) {
+            if (entity.time >= 20 * 10) {
                 entity.time = 0;
                 entity.progress++;
 

@@ -2,10 +2,8 @@ package club.someoneice.vine.common.shaker;
 
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
-import club.someoneice.vine.core.DataList;
-import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.core.DataMap;
 import club.someoneice.vine.init.ItemInit;
-import com.epherical.croptopia.register.helpers.Juice;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -50,12 +48,20 @@ public class Shaker extends BaseEntityBlock {
                     return InteractionResult.SUCCESS;
                 }
 
-                DataList list = tile.list;
+                DataMap list = tile.list;
                 boolean hasCocktail = false;
-                for (DataList li : Data.cocktailMap.keySet()) if (li.isSame(list)) {
-                    tile.cocktail = Data.cocktailMap.get(li).getDefaultInstance();
-                    hasCocktail = true;
-                    break;
+                // TODO
+                for (DataMap li : Data.cocktailMap.keySet()) {
+                    var map = li.getMap();
+                    for (var items : tile.list.getMap().keySet()) {
+                        if (!map.containsKey(items) && map.get(items) != tile.list.getMap().get(items)) {
+                            hasCocktail = false;
+                            break;
+                        } else {
+                            tile.cocktail = Data.cocktailMap.get(li).getDefaultInstance();
+                            hasCocktail = true;
+                        }
+                    }
                 }
 
                 if (!hasCocktail) tile.cocktail = ItemInit.NoneCocktail.get().getDefaultInstance();
@@ -68,23 +74,15 @@ public class Shaker extends BaseEntityBlock {
                 ItemStack item = player.getItemInHand(hand);
                 if (item.getItem() instanceof Wine.WineItem wine) {
                     var wineitem = Wine.getWineByItem(wine).bottle;
-                    if (wine.wineEnum == Wine.WineEnum.BUCKET || wine.wineEnum == Wine.WineEnum.BOTTLE) {
-                        tile.list.put(wineitem.get());
-                        tile.list.put(wineitem.get());
-                        tile.list.put(wineitem.get());
-                        tile.list.put(wineitem.get());
-                    } else tile.list.put(wineitem.get());
-
+                    if (wine.wineEnum == Wine.WineEnum.BUCKET || wine.wineEnum == Wine.WineEnum.BOTTLE)
+                        tile.list.put(new ItemStack(wineitem.get(), 4));
+                    else tile.list.put(wineitem.get().getDefaultInstance());
                     if (item.hasContainerItem()) player.addItem(item.getContainerItem());
                     item.shrink(1);
-                } else if (TskimiSeiranVine.isCroptopiaInstall) {
-                    for (Juice juice : Juice.copy()) {
-                        if (juice.m_5456_() == item.getItem()) {
-                            tile.list.put(item.copy().getItem());
-                            item.shrink(1);
-                            break;
-                        }
-                    }
+                } else {
+                    tile.list.put(item);
+                    if (item.hasContainerItem()) player.addItem(item.getContainerItem());
+                    item.shrink(1);
                 }
             }
         }
@@ -96,7 +94,7 @@ public class Shaker extends BaseEntityBlock {
         if (item.getOrCreateTag().contains("shaker")) {
             if (world.getBlockEntity(pos) instanceof ShakerTile tile) {
                 assert item.getTag() != null;
-                DataList list = new DataList();
+                DataMap list = new DataMap();
                 list.read(item.getTag());
                 tile.list = list;
                 tile.cocktail = ItemStack.of(item.getTag().getCompound("cocktail"));

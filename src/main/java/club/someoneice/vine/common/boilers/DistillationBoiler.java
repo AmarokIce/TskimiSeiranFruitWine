@@ -1,6 +1,5 @@
 package club.someoneice.vine.common.boilers;
 
-import club.someoneice.vine.common.barrel.BrewingBarrelEntity;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.TileInit;
 import net.minecraft.core.BlockPos;
@@ -54,7 +53,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                     item.shrink(1);
                     player.addItem(new ItemStack(Items.BUCKET));
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
-                } else if ((item.getCount() >= 16 || item.getMaxStackSize() == 1) && entity.getWine() == null && entity.setWine(item)) {
+                } else if ((item.getCount() >= 16 || item.getMaxStackSize() == 1) && entity.getWine() == null && entity.setWine(world, pos, item)) {
                     if (item.getMaxStackSize() == 1) item.shrink(1);
                     else item.shrink(16);
                     if (item.hasContainerItem()) player.addItem(item.getContainerItem());
@@ -78,6 +77,10 @@ public class DistillationBoiler extends BaseEntityBlock {
                         item.shrink(1);
                         player.addItem(new ItemStack(entity.getWine().wineBottle.get()));
                         entity.wine -= 4;
+                    } else if (item.getItem() == ItemInit.GlassBottle.get()) {
+                        item.shrink(1);
+                        player.addItem(new ItemStack(entity.getWine().glass.get()));
+                        entity.wine -= 1;
                     }
 
                     if (entity.wine == 0) {

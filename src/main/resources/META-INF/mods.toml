@@ -2,7 +2,7 @@ modLoader="javafml" #mandatory
 loaderVersion="[40,)"
 license="AFL-3.0"
 [[mods]]
-modId="tskimi_seiran_fruit_vine"
+modId="tksrwine"
 version="${file.jarVersion}"
 displayName="TskimiSeiranFruitVine"
 logoFile="hot.png"
@@ -12,13 +12,14 @@ description='''
 本模组添加了使用各式各样的材料酿造而成的酒精饮料，你可以使用木材或铁制作酿造桶来酿造这些佳酿，享受从酿造到饮下的过程中取得的快乐。
 '''
 
-[[dependencies.tskimi_seiran_fruit_vine]]
+[[dependencies.tksrwine]]
     modId="forge"
     mandatory=true
     versionRange="[40,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.tskimi_seiran_fruit_vine]]
+
+[[dependencies.tksrwine]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.18.2,1.19)"

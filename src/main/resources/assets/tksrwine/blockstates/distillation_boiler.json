@@ -1,0 +1,21 @@
+
+{
+  "variants": {
+    "facing=north": {
+      "model": "tksrwine:block/distillation_boiler",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "tksrwine:block/distillation_boiler",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "tksrwine:block/distillation_boiler",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "tksrwine:block/distillation_boiler",
+      "y": 90
+    }
+  }
+}

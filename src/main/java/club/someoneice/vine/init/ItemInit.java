@@ -1,9 +1,9 @@
 package club.someoneice.vine.init;
 
-import club.someoneice.vine.common.shaker.CocktailBase;
+import club.someoneice.vine.common.cocktail.CocktailBase;
 import club.someoneice.vine.common.item.Flagon;
 import club.someoneice.vine.common.item.Wine;
-import club.someoneice.vine.common.shaker.Cocktail;
+import club.someoneice.vine.common.cocktail.Cocktail;
 import club.someoneice.vine.common.shaker.ShakerItem;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import net.minecraft.world.effect.MobEffect;
@@ -27,6 +27,7 @@ public class ItemInit {
     public static RegistryObject<Item> Flagon = ITEMS.register("flagon", Flagon::new);
     public static RegistryObject<Item> Gourd = ITEMS.register("gourd", Flagon::new);
     public static RegistryObject<Item> Cup = ITEMS.register("cup", () -> new Item(new Item.Properties().tab(TskimiSeiranVine.TAB)));
+    public static RegistryObject<Item> GlassBottle = ITEMS.register("glass_bottle", () -> new Item(new Item.Properties().tab(TskimiSeiranVine.TAB)));
     public static RegistryObject<Item> WineBottle = ITEMS.register("wine_bottle", () -> new Item(new Item.Properties().tab(TskimiSeiranVine.TAB)));
 
     // 酿造

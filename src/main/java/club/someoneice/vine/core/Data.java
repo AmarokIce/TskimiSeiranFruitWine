@@ -22,7 +22,7 @@ public class Data {
     public static final Map<TagKey<Item>, Wine> distillationTagList = new HashMap<>();
 
     // CockTail
-    public static final Map<DataList, Item> cocktailMap = new HashMap<>();
+    public static final Map<DataMap, Item> cocktailMap = new HashMap<>();
 
     public static void init() {
         wineItemMap.put(Items.HONEY_BOTTLE, ItemInit.HoneyWine);

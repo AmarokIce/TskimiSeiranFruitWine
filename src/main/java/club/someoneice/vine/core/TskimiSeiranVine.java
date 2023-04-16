@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 
 @Mod(TskimiSeiranVine.MODID)
 public class TskimiSeiranVine {
-    public static final String MODID = "tskimi_seiran_fruit_vine";
+    public static final String MODID = "tksrwine";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final boolean isCroptopiaInstall = FMLLoader.getLoadingModList().getModFileById("croptopia") != null;
 
@@ -64,13 +64,11 @@ public class TskimiSeiranVine {
     }
 
     private void data() {
+        var tsw = new DataMap();
+        tsw.put(new ItemStack(ItemInit.Peach.bottle.get(), 4));
+        tsw.put(new ItemStack(ItemInit.Whiskey.bottle.get(), 4));
+        tsw.put(new ItemStack(ItemInit.Vodka.bottle.get(), 4));
 
-
-        Data.cocktailMap.put(new DataList(
-                        ItemInit.Peach.bottle.get(), ItemInit.Peach.bottle.get(), ItemInit.Peach.bottle.get(),
-                        ItemInit.Whiskey.bottle.get(), ItemInit.Whiskey.bottle.get(), ItemInit.Whiskey.bottle.get(),
-                        ItemInit.Vodka.bottle.get(), ItemInit.Vodka.bottle.get(), ItemInit.Vodka.bottle.get()),
-                ItemInit.TskimiSeiran_S_Mystery.get()
-        );
+        Data.cocktailMap.put(tsw, ItemInit.TskimiSeiran_S_Mystery.get());
     }
 }
