@@ -17,6 +17,7 @@
   "item.tksrwine.gourd": "圆酒葫芦",
   "item.tksrwine.cup": "木杯",
   "item.tksrwine.wine_bottle": "酒瓶",
+  "item.tksrwine.glass_bottle": "玻璃杯",
   "block.tksrwine.goblet": "高脚杯",
   "block.tksrwine.none_cocktail": "神秘鲜酿",
   "item.tksrwine.tskimi_seiran_mystery": "月见清兰的奇妙特调",
@@ -38,6 +39,10 @@
   "tsfWine.whiskey": "威士忌",
   "tsfWine.rum": "金朗姆",
   "tsfWine.kwas": "格拉瓦",
+  "tsfWine.spirits": "白酒",
+  "tsfWine.sake": "清酒",
+  "tsfWine.plum": "李子酒",
+  "tsfWine.grape": "葡萄酒",
 
   "item.tksrwine.apple_cider_bucket": "苹果酒",
   "item.tksrwine.apple_cider_wine": "苹果酒",
@@ -135,9 +140,36 @@
   "item.tksrwine.rum_cup": "金朗姆",
   "item.tksrwine.rum_glass": "金朗姆",
 
-  "item.tksrwine.kwas_bucket": "格瓦拉",
-  "item.tksrwine.kwas_wine": "格瓦拉",
-  "item.tksrwine.kwas_bottle": "格瓦拉",
-  "item.tksrwine.kwas_cup": "格瓦拉",
-  "item.tksrwine.kwas_glass": "格瓦拉"
+  "item.tksrwine.kwas_bucket": "格瓦斯",
+  "item.tksrwine.kwas_wine": "格瓦斯",
+  "item.tksrwine.kwas_bottle": "格瓦斯",
+  "item.tksrwine.kwas_cup": "格瓦斯",
+  "item.tksrwine.kwas_glass": "格瓦斯",
+
+  "item.tksrwine.spirits_bucket": "白酒",
+  "item.tksrwine.spirits_wine": "白酒",
+  "item.tksrwine.spirits_bottle": "白酒",
+  "item.tksrwine.spirits_cup": "白酒",
+  "item.tksrwine.spirits_glass": "白酒",
+
+  "item.tksrwine.sake_bucket": "清酒",
+  "item.tksrwine.sake_wine": "清酒",
+  "item.tksrwine.sake_bottle": "清酒",
+  "item.tksrwine.sake_cup": "清酒",
+  "item.tksrwine.sake_glass": "清酒",
+
+  "item.tksrwine.plum_bucket": "李子酒",
+  "item.tksrwine.plum_wine": "李子酒",
+  "item.tksrwine.plum_bottle": "李子酒",
+  "item.tksrwine.plum_cup": "李子酒",
+  "item.tksrwine.plum_glass": "李子酒",
+
+  "item.tksrwine.grape_bucket": "葡萄酒",
+  "item.tksrwine.grape_wine": "葡萄酒",
+  "item.tksrwine.grape_bottle": "葡萄酒",
+  "item.tksrwine.grape_cup": "葡萄酒",
+  "item.tksrwine.grape_glass": "葡萄酒",
+
+  "item.tksrwine.tskimi_seiran_soup.effect.tsks": "月兰的神秘特调",
+  "message.rebbitsoup.potion": "一瓶色泽上有点怪异的紫色流质 \n尝一口，一股蜜桃的香甜与伏特加的刺激以及烧兔肉的香味齐聚在瓶内，嗯...尝起来还挺不错的... \n有低可能性会有少量月兰的洗澡水混在里面。"
 }

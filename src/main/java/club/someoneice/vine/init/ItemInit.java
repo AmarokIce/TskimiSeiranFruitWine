@@ -1,9 +1,10 @@
 package club.someoneice.vine.init;
 
+import club.someoneice.vine.common.cocktail.Cocktail;
 import club.someoneice.vine.common.cocktail.CocktailBase;
 import club.someoneice.vine.common.item.Flagon;
+import club.someoneice.vine.common.item.PotionSoup;
 import club.someoneice.vine.common.item.Wine;
-import club.someoneice.vine.common.cocktail.Cocktail;
 import club.someoneice.vine.common.shaker.ShakerItem;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import net.minecraft.world.effect.MobEffect;
@@ -50,9 +51,15 @@ public class ItemInit {
     public static Wine Whiskey = new Wine("whiskey", 4);
     public static Wine Rum = new Wine("rum", 3);
     public static Wine Kwas = new Wine("kwas", 3);
+    public static Wine Spirits = new Wine("spirits", 5);
+    public static Wine Grape = new Wine("grape", 3);
+    public static Wine Plum = new Wine("plum", 3);
+    public static Wine Sake = new Wine("sake", 3);
+
 
     public static RegistryObject<Item> NoneCocktail = ITEMS.register("none_cocktail_item", () -> new Cocktail.CocktailItem((Cocktail.CocktailBlock) BlockInit.NoneCocktail.get()));
     public static RegistryObject<Item> TskimiSeiran_S_Mystery = ITEMS.register("tskimi_seiran_mystery", () -> itemCocktailBase(10, MobEffects.JUMP, MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED));
+    public static RegistryObject<Item> TskimiSeiran_SOUP = ITEMS.register("tskimi_seiran_soup", PotionSoup::new);
 
     private static Item itemCocktailBase(int hunger, MobEffect... effects) {
         Item.Properties properties = new Item.Properties();

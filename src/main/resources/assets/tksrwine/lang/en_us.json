@@ -17,6 +17,7 @@
   "item.tksrwine.gourd": "Gourd",
   "item.tksrwine.cup": "Cup",
   "item.tksrwine.wine_bottle": "Wine Bottle",
+  "item.tksrwine.glass_bottle": "Glass Bottle",
   "block.tksrwine.goblet": "Goblet",
   "block.tksrwine.none_cocktail": " Mystery Drink",
   "item.tksrwine.tskimi_seiran_mystery": "Rskimi Seiran's Mystery Drink",
@@ -39,6 +40,10 @@
   "tsfWine.whiskey": "Whiskey",
   "tsfWine.rum": "Rum",
   "tsfWine.kwas": "Kwas",
+  "tsfWine.spirits": "Spirits",
+  "tsfWine.sake": "Sake",
+  "tsfWine.plum": "Plum",
+  "tsfWine.grape": "Grape",
 
   "item.tksrwine.apple_cider_bucket": "Apple Cider",
   "item.tksrwine.apple_cider_wine": "Apple Cider",
@@ -140,5 +145,32 @@
   "item.tksrwine.kwas_wine": "Kwas",
   "item.tksrwine.kwas_bottle": "Kwas",
   "item.tksrwine.kwas_cup": "Kwas",
-  "item.tksrwine.kwas_glass": "Kwas"
+  "item.tksrwine.kwas_glass": "Kwas",
+
+  "item.tksrwine.spirits_bucket": "Spirits",
+  "item.tksrwine.spirits_wine": "Spirits",
+  "item.tksrwine.spirits_bottle": "Spirits",
+  "item.tksrwine.spirits_cup": "Spirits",
+  "item.tksrwine.spirits_glass": "Spirits",
+
+  "item.tksrwine.sake_bucket": "Sake",
+  "item.tksrwine.sake_wine": "Sake",
+  "item.tksrwine.sake_bottle": "Sake",
+  "item.tksrwine.sake_cup": "Sake",
+  "item.tksrwine.sake_glass": "Sake",
+
+  "item.tksrwine.plum_bucket": "Plum Wine",
+  "item.tksrwine.plum_wine": "Plum Wine",
+  "item.tksrwine.plum_bottle": "Plum Wine",
+  "item.tksrwine.plum_cup": "Plum Wine",
+  "item.tksrwine.plum_glass": "Plum Wine",
+
+  "item.tksrwine.grape_bucket": "Grape Wine",
+  "item.tksrwine.grape_wine": "Grape Wine",
+  "item.tksrwine.grape_bottle": "Grape Wine",
+  "item.tksrwine.grape_cup": "Grape Wine",
+  "item.tksrwine.grape_glass": "Grape Wine",
+
+  "item.tksrwine.tskimi_seiran_soup.effect.tsks": "TskimiSeiran's Mystery Mix",
+  "message.rebbitsoup.potion": "A bottle of purple liquid with a little weird color on it \nTake a bite, the sweetness of peach with the stimulation of vodka and the aroma of roasted rabbit meat come together in the bottle, well... It tastes pretty good... \nThere is a low probability that there will be a small amount of Yuelan bath water mixed in it"
 }

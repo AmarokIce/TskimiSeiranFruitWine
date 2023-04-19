@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "x x",
+    "o o",
+    "ooo"
+  ],
+
+  "key": {
+    "o": {
+      "tag": "minecraft:planks"
+    },
+    "x": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "tksrwine:cup"
+  }
+}

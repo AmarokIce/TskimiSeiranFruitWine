@@ -27,7 +27,7 @@ public class Wine {
         bucket      = ItemInit.ITEMS.register(name + "_bucket",      () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger * 4), Items.BUCKET));
         wineBottle  = ItemInit.ITEMS.register(name + "_wine",        () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger * 4), ItemInit.WineBottle.get()));
         bottle      = ItemInit.ITEMS.register(name + "_bottle",      () -> new WineItem(WineEnum.BOTTLE, name, WineItem.propertiesHelper(hunger), Items.GLASS_BOTTLE));
-        glass      = ItemInit.ITEMS.register(name + "_glass",        () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()));
+        glass       = ItemInit.ITEMS.register(name + "_glass",        () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()));
         cup         = ItemInit.ITEMS.register(name + "_cup",         () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()));
 
         Data.wineMap.put("tsfWine." + name, this);

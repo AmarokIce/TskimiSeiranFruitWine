@@ -4,7 +4,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 public class TagHelper {
     public static final TagKey<Item> Strawberry = bind("fruits/strawberry");
@@ -15,6 +14,10 @@ public class TagHelper {
     public static final TagKey<Item> Cherry =     bind("fruits/cherry");
     public static final TagKey<Item> Pineapple =  bind("fruits/pineapple");
     public static final TagKey<Item> Milk =       bind("milk");
+    public static final TagKey<Item> Corn =       bind("crops/corn");
+    public static final TagKey<Item> Plum =       bind("fruits/plum");
+    public static final TagKey<Item> Grape =       bind("fruits/grape");
+    public static final TagKey<Item> Rice =       bind("crops/rice");
 
     public TagHelper() {};
 

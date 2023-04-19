@@ -54,7 +54,7 @@ public class Shaker extends BaseEntityBlock {
                 for (DataMap li : Data.cocktailMap.keySet()) {
                     var map = li.getMap();
                     for (var items : tile.list.getMap().keySet()) {
-                        if (!map.containsKey(items) && map.get(items) != tile.list.getMap().get(items)) {
+                        if (!map.containsKey(items) || map.get(items) != tile.list.getMap().get(items)) {
                             hasCocktail = false;
                             break;
                         } else {

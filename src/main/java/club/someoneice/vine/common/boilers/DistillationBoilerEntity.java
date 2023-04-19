@@ -85,7 +85,7 @@ public class DistillationBoilerEntity extends BlockEntity {
     public boolean setWine(Level world, BlockPos pos, ItemStack item) {
         if (!world.isClientSide) {
             var block = world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()));
-            if (block.is(Blocks.CAMPFIRE) || block.is(Blocks.SOUL_CAMPFIRE) || block.is(Blocks.FIRE) || block.is(Blocks.SOUL_CAMPFIRE))
+            if (block.is(Blocks.CAMPFIRE) || block.is(Blocks.SOUL_CAMPFIRE) || block.is(Blocks.FIRE) || block.is(Blocks.SOUL_CAMPFIRE) || block.is(Blocks.LEVER) || block.is(Blocks.MAGMA_BLOCK))
                 return setWineWithDistillation(item);
             else return setWineWithFerment(item);
         }
@@ -113,6 +113,13 @@ public class DistillationBoilerEntity extends BlockEntity {
         if (Data.distillationItemMap.containsKey(item.getItem())) {
             this.wine_type = Data.distillationItemMap.get(item.getItem());
             return true;
+        } else {
+            for (var tag : Data.distillationTagList.keySet()) {
+                if (item.is(tag)) {
+                    this.wine_type = Data.distillationTagList.get(tag);
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -123,7 +130,7 @@ public class DistillationBoilerEntity extends BlockEntity {
             world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             world.addParticle(ParticleTypes.SMOKE, pos.getX() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, pos.getY() + 0.6D, pos.getZ() + 0.5D + world.random.nextDouble() * 0.3D - 0.2D, 0.0D, 0.0D, 0.0D);
             ++entity.time;
-            if (entity.time >= 20 * 10) {
+            if (entity.time >= 20 * 15) {
                 entity.time = 0;
                 entity.progress++;
 

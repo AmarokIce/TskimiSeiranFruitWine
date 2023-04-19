@@ -40,6 +40,8 @@ public class Data {
         wineTagList.put(TagHelper.Peach, ItemInit.Peach);
         wineTagList.put(TagHelper.Strawberry, ItemInit.Strawberry);
         wineTagList.put(TagHelper.Coconut, ItemInit.Coconut);
+        wineTagList.put(TagHelper.Plum, ItemInit.Plum);
+        wineTagList.put(TagHelper.Grape, ItemInit.Grape);
 
         /*
         wineItemMap.put(Content.CHERRY.m_5456_(), ItemInit.Cherry);
@@ -54,5 +56,8 @@ public class Data {
         distillationItemMap.put(Items.SUGAR_CANE, ItemInit.Rum);
         distillationItemMap.put(Items.POTATO, ItemInit.Vodka);
         distillationItemMap.put(Items.WHEAT, ItemInit.Whiskey);
+
+        distillationTagList.put(TagHelper.Rice, ItemInit.Sake);
+        distillationTagList.put(TagHelper.Corn, ItemInit.Spirits);
         }
 }

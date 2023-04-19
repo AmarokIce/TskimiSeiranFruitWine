@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " x ",
+    "x x",
+    "xxx"
+  ],
+
+  "key": {
+    "x": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "tksrwine:shaker"
+  }
+}

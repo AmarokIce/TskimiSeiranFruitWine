@@ -23,6 +23,7 @@ public class Goblet extends Block {
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
         var itemList = new ArrayList<ItemStack>();
         itemList.add(new ItemStack(this.asItem()));
+
         return itemList;
     }
 

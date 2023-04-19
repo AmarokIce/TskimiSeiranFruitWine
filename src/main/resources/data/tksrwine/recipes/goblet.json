@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "g g",
+    " g ",
+    " g "
+  ],
+
+  "key": {
+    "g": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "tksrwine:goblet_item",
+    "count": 4
+  }
+}

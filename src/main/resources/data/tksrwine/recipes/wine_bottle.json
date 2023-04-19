@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "ggg"
+  ],
+
+  "key": {
+    "g": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "tksrwine:wine_bottle"
+  }
+}

@@ -2,9 +2,12 @@ package club.someoneice.vine.core;
 
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
+import club.someoneice.vine.init.PotionInit;
 import club.someoneice.vine.init.TileInit;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -45,6 +48,7 @@ public class TskimiSeiranVine {
 
     public TskimiSeiranVine() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        PotionInit.POTIONS.register(bus);
         ItemInit.init(bus);
         BlockInit.BLOCKS.register(bus);
         TileInit.TILE_ENTITIES.register(bus);
@@ -64,11 +68,29 @@ public class TskimiSeiranVine {
     }
 
     private void data() {
-        var tsw = new DataMap();
-        tsw.put(new ItemStack(ItemInit.Peach.bottle.get(), 4));
-        tsw.put(new ItemStack(ItemInit.Whiskey.bottle.get(), 4));
-        tsw.put(new ItemStack(ItemInit.Vodka.bottle.get(), 4));
+        Data.cocktailMap.put(map(
+                item(ItemInit.Peach.bottle.get(), 3),
+                item(ItemInit.Whiskey.bottle.get(), 3),
+                item(ItemInit.Vodka.bottle.get(), 3)),
+                ItemInit.TskimiSeiran_S_Mystery.get()
+        );
 
-        Data.cocktailMap.put(tsw, ItemInit.TskimiSeiran_S_Mystery.get());
+        Data.cocktailMap.put(map(
+                item(ItemInit.Peach.bottle.get(), 3),
+                item(Items.RABBIT, 2),
+                item(Items.CARROT, 2),
+                item(ItemInit.Vodka.bottle.get(), 2)),
+                ItemInit.TskimiSeiran_SOUP.get()
+        );
+    }
+
+    private DataMap map(ItemStack ... items) {
+        var map = new DataMap();
+        for (var item : items) map.put(item);
+        return map;
+    }
+
+    private ItemStack item(Item item, int i) {
+        return new ItemStack(item, i);
     }
 }
