@@ -2,7 +2,7 @@
     {
       "parent": "item/generated",
       "textures": {
-        "layer0": "tksrwine:item/vodka_wine"
+        "layer0": "tksrwine:item/sake_wine"
       }
     }
     

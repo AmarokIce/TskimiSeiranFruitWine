@@ -79,7 +79,7 @@ public class Wine {
             var properties = new Item.Properties();
             var builder = new FoodProperties.Builder();
             builder.nutrition(hunger);
-            builder.saturationMod(Math.max(hunger - 2, 0));
+            builder.saturationMod((float) ((Math.max(hunger - 2, 0)) / 10));
             builder.alwaysEat();
             properties.food(builder.build());
             properties.tab(TskimiSeiranVine.WINE_TAB);

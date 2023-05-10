@@ -59,11 +59,11 @@ public class Flagon extends Item {
         } else if (player.getItemInHand(ahand).getItem() instanceof Wine.WineItem wine && isSameWine(itemstack, wine)) {
             if (wine.wineEnum == Wine.WineEnum.WINE || wine.wineEnum == Wine.WineEnum.BUCKET) {
                 nbt.putInt("hunger", wine.getFoodProperties().getNutrition() / 4);
-                nbt.putFloat("saturation", (wine.getFoodProperties().getNutrition() / 4) - 2);
+                nbt.putFloat("saturation", (float) (((wine.getFoodProperties().getNutrition() / 4) - 2) / 10));
                 nbt.putInt("wine", 4);
             } else {
                 nbt.putInt("hunger", wine.getFoodProperties().getNutrition());
-                nbt.putFloat("saturation", (wine.getFoodProperties().getNutrition()) - 2);
+                nbt.putFloat("saturation", (float) (((wine.getFoodProperties().getNutrition()) - 2) / 10));
                 nbt.putInt("wine", Math.min(nbt.getInt("wine") + 1, 4));
             }
 

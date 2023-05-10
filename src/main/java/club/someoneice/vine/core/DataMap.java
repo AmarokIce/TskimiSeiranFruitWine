@@ -40,7 +40,8 @@ public class DataMap {
     }
 
     public void put(ItemStack item) {
-        map.put(item.getItem(), item.getCount());
+        if (map.containsKey(item.getItem())) map.put(item.getItem(), map.get(item.getItem()) + item.getCount());
+        else map.put(item.getItem(), item.getCount());
     }
 
     public boolean isEmpty() {

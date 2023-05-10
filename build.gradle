@@ -15,7 +15,7 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle'
 
-version = '1.1'
+version = '1.2'
 group = 'club.someoneice.vine'
 archivesBaseName = 'TSKimiSeiranFruitWine-Forge'
 
@@ -91,7 +91,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
-    implementation fileTree(dir: 'libs', includes: ['*.jar'])
+    // implementation fileTree(dir: 'libs', includes: ['*.jar'])
 }
 
 jar {

@@ -7,6 +7,8 @@ import club.someoneice.vine.common.item.PotionSoup;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.common.shaker.ShakerItem;
 import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.json.JsonCore;
+import com.google.common.collect.Maps;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -17,7 +19,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Map;
+
 public class ItemInit {
+    public static final Map<String, RegistryObject<Item>> COCKTAIL_LIST = Maps.newHashMap();
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TskimiSeiranVine.MODID);
 
     public static RegistryObject<Item> Shaker = ITEMS.register("shaker", ShakerItem::new);
@@ -65,7 +71,7 @@ public class ItemInit {
         Item.Properties properties = new Item.Properties();
         FoodProperties.Builder builder = new FoodProperties.Builder();
         builder.nutrition(hunger);
-        builder.saturationMod((float) (hunger - 2));
+        builder.saturationMod((hunger - 2) / 10.0F);
         builder.alwaysEat();
         properties.tab(TskimiSeiranVine.COCKTAIL_TAB).stacksTo(1).food(builder.build());
         return new CocktailBase(properties, effects);
@@ -73,5 +79,13 @@ public class ItemInit {
 
     public static void init(IEventBus bus) {
         ITEMS.register(bus);
+    }
+
+    static class CustomCocktail {
+        public CustomCocktail() {
+            for (var wine : JsonCore.DATA_LIST) {
+                COCKTAIL_LIST.put(wine.name, ItemInit.ITEMS.register(wine.name, () -> ItemInit.itemCocktailBase(wine.hunger)));
+            }
+        }
     }
 }

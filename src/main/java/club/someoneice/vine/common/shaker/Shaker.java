@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,6 +30,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Shaker extends BaseEntityBlock {
     public Shaker() {
@@ -74,16 +77,13 @@ public class Shaker extends BaseEntityBlock {
                 ItemStack item = player.getItemInHand(hand);
                 if (item.getItem() instanceof Wine.WineItem wine) {
                     var wineitem = Wine.getWineByItem(wine).bottle;
-                    if (wine.wineEnum == Wine.WineEnum.BUCKET || wine.wineEnum == Wine.WineEnum.BOTTLE)
+                    if (wine.wineEnum == Wine.WineEnum.BUCKET || wine.wineEnum == Wine.WineEnum.WINE)
                         tile.list.put(new ItemStack(wineitem.get(), 4));
                     else tile.list.put(wineitem.get().getDefaultInstance());
-                    if (item.hasContainerItem()) player.addItem(item.getContainerItem());
-                    item.shrink(1);
-                } else {
-                    tile.list.put(item);
-                    if (item.hasContainerItem()) player.addItem(item.getContainerItem());
-                    item.shrink(1);
-                }
+                } else tile.list.put(item);
+
+                if (item.hasContainerItem()) player.addItem(item.getContainerItem());
+                item.shrink(1);
             }
         }
         return InteractionResult.SUCCESS;
