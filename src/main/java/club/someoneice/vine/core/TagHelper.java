@@ -19,7 +19,7 @@ public class TagHelper {
     public static final TagKey<Item> Grape =       bind("fruits/grape");
     public static final TagKey<Item> Rice =       bind("crops/rice");
 
-    public TagHelper() {};
+    TagHelper() {};
 
     private static TagKey<Item> bind(String name) {
         return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation("forge", name));

@@ -2,14 +2,12 @@
   "itemGroup.tksrwine": "月蘭果酒",
   "itemGroup.tksrwine.wine": "月蘭果酒：鮮釀",
   "itemGroup.tksrwine.cocktail": "月蘭果酒：調酒",
-  "tsfWine.puttsfWine.message": "現在準備釀造：",
-  "tsfWine.get_wine_name.message": "容器中的酒品是：",
-  "tsfWine.has_wine.message": "酒水剩餘：",
-  "tsfWine.get_win_progress.message": "釀造進度：",
+
   "tsfWine.wine_num.message": "壺中剩餘的酒水為：",
+
   "block.tksrwine.brewing_barrel": "釀酒桶",
   "block.tksrwine.distillation_boiler": "蒸餾鍋",
-  "block.tksrwine.shaker": "雪克杯",
+  "item.tksrwine.shaker": "雪克杯",
   "item.tksrwine.flagon": "異域酒壺",
   "item.tksrwine.gourd": "圓酒葫蘆",
   "item.tksrwine.cup": "木杯",

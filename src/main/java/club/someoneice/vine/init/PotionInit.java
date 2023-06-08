@@ -15,6 +15,5 @@ public class PotionInit {
             new MobEffectInstance(MobEffects.WEAKNESS, 20 * 30, 0),
             new MobEffectInstance(MobEffects.CONFUSION, 20 * 30, 0),
             new MobEffectInstance(MobEffects.REGENERATION, 20 * 30, 0)
-            ));
-
+    ));
 }

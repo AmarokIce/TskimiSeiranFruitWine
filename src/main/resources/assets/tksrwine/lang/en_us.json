@@ -3,16 +3,12 @@
   "itemGroup.tksrwine.wine": "Tskimi Seiran Fruit Wine : Wine",
   "itemGroup.tksrwine.cocktail": "Tskimi Seiran Fruit Wine : Cocktail",
 
-  "tsfWine.puttsfWine.message": "Now ready to make :",
-  "tsfWine.get_wine_name.message": "The wine in container is : ",
-  "tsfWine.has_wine.message": "The wine in container has : ",
-  "tsfWine.get_win_progress.message": "The progress in container : ",
   "tsfWine.wine_num.message": "The wine in flagon has : ",
 
   "block.tksrwine.brewing_barrel": "Brewing Barrel",
   "block.tksrwine.distillation_boiler": "Distillation Boiler",
 
-  "block.tksrwine.shaker": "Shaker",
+  "item.tksrwine.shaker": "Shaker",
   "item.tksrwine.flagon": "Flagon",
   "item.tksrwine.gourd": "Gourd",
   "item.tksrwine.cup": "Cup",

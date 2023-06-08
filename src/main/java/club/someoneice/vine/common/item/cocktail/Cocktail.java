@@ -1,4 +1,4 @@
-package club.someoneice.vine.common.cocktail;
+package club.someoneice.vine.common.item.cocktail;
 
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;

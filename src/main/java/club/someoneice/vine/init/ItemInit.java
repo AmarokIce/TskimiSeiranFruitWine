@@ -1,13 +1,12 @@
 package club.someoneice.vine.init;
 
-import club.someoneice.vine.common.cocktail.Cocktail;
-import club.someoneice.vine.common.cocktail.CocktailBase;
 import club.someoneice.vine.common.item.Flagon;
 import club.someoneice.vine.common.item.PotionSoup;
+import club.someoneice.vine.common.item.ShakerItem;
 import club.someoneice.vine.common.item.Wine;
-import club.someoneice.vine.common.shaker.ShakerItem;
+import club.someoneice.vine.common.item.cocktail.Cocktail;
+import club.someoneice.vine.common.item.cocktail.CocktailBase;
 import club.someoneice.vine.core.TskimiSeiranVine;
-import club.someoneice.vine.json.JsonCore;
 import com.google.common.collect.Maps;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -79,13 +78,5 @@ public class ItemInit {
 
     public static void init(IEventBus bus) {
         ITEMS.register(bus);
-    }
-
-    static class CustomCocktail {
-        public CustomCocktail() {
-            for (var wine : JsonCore.DATA_LIST) {
-                COCKTAIL_LIST.put(wine.name, ItemInit.ITEMS.register(wine.name, () -> ItemInit.itemCocktailBase(wine.hunger)));
-            }
-        }
     }
 }

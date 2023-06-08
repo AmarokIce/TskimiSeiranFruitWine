@@ -1,0 +1,36 @@
+{
+  "type": "tksrwine:shaker",
+  "ingredients": [
+    {
+      "item": "tksrwine:peach_bottle"
+    },
+    {
+      "item": "tksrwine:peach_bottle"
+    },
+    {
+      "item": "tksrwine:peach_bottle"
+    },
+    {
+      "item": "minecraft:rabbit"
+    },
+    {
+      "item": "minecraft:rabbit"
+    },
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "tksrwine:vodka_bottle"
+    },
+    {
+      "item": "tksrwine:vodka_bottle"
+    }
+  ],
+  "shake_count": 8,
+  "output": {
+    "item": "tksrwine:tskimi_seiran_soup"
+  }
+}

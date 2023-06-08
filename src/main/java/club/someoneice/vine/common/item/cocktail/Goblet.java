@@ -1,4 +1,4 @@
-package club.someoneice.vine.common;
+package club.someoneice.vine.common.item.cocktail;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;

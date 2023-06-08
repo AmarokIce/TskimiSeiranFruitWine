@@ -3,15 +3,19 @@ package club.someoneice.vine.common.item;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.ItemInit;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.registries.RegistryObject;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class Wine {
     public RegistryObject<Item> bucket;
@@ -24,8 +28,8 @@ public class Wine {
     public Wine(String name, int hunger) {
         this.name   = "tsfWine." + name;
 
-        bucket      = ItemInit.ITEMS.register(name + "_bucket",      () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger * 4), Items.BUCKET));
-        wineBottle  = ItemInit.ITEMS.register(name + "_wine",        () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger * 4), ItemInit.WineBottle.get()));
+        bucket      = ItemInit.ITEMS.register(name + "_bucket",      () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger), Items.BUCKET));
+        wineBottle  = ItemInit.ITEMS.register(name + "_wine",        () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger), ItemInit.WineBottle.get()));
         bottle      = ItemInit.ITEMS.register(name + "_bottle",      () -> new WineItem(WineEnum.BOTTLE, name, WineItem.propertiesHelper(hunger), Items.GLASS_BOTTLE));
         glass       = ItemInit.ITEMS.register(name + "_glass",        () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()));
         cup         = ItemInit.ITEMS.register(name + "_cup",         () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()));
@@ -70,9 +74,28 @@ public class Wine {
 
         @Override
         public ItemStack finishUsingItem(ItemStack item, Level world, LivingEntity entity) {
-            super.finishUsingItem(item, world, entity);
-            if (entity instanceof Player player) player.addItem(new ItemStack(this.returnItem));
+            if (!world.isClientSide && entity instanceof Player player) {
+                world.gameEvent(player, GameEvent.EAT, player.eyeBlockPosition());
+                world.playSound(player, player.getX(), player.getY(), player.getZ(), this.getDrinkingSound(), SoundSource.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
+                player.getFoodData().eat(item.getItem().getFoodProperties().getNutrition(), item.getItem().getFoodProperties().getSaturationModifier());
+                var nbt = item.getOrCreateTag();
+                if (!nbt.contains("wine")) nbt.putInt("wine", 4);
+                if (!player.isCreative()) nbt.putInt("wine", Math.max(nbt.getInt("wine") - 1, 0));
+                if (nbt.getInt("wine") == 0) {
+                    item.shrink(1);
+                    nbt.putInt("wine", 4);
+                    player.addItem(new ItemStack(this.returnItem));
+                }
+            }
+
             return item;
+        }
+
+        @Override
+        public int getBarWidth(ItemStack itemStack) {
+            if ((((WineItem) itemStack.getItem()).wineEnum == WineEnum.BUCKET || ((WineItem) itemStack.getItem()).wineEnum == WineEnum.WINE) && itemStack.getOrCreateTag().contains("wine"))
+                return Math.round(13.0F - (float) (4 - itemStack.getOrCreateTag().getInt("wine")) * 13 / 4.0F);
+            else return -1;
         }
 
         private static Item.Properties propertiesHelper(int hunger) {
@@ -85,6 +108,15 @@ public class Wine {
             properties.tab(TskimiSeiranVine.WINE_TAB);
             properties.stacksTo(8);
             return properties;
+        }
+
+
+        @Override
+        public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> list, TooltipFlag flag) {
+            var tag = item.getOrCreateTag();
+            if (this.wineEnum == WineEnum.WINE || this.wineEnum == WineEnum.BUCKET)
+                if (tag.contains("wine"))
+                    list.add(new TranslatableComponent("tsfWine.wine_num.message").append(Integer.toString(tag.getInt("wine"))));
         }
     }
 }

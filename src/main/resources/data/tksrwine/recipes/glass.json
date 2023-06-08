@@ -1,8 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " g ",
-    "ggg"
+    "g g",
+    "g g",
+    " g "
   ],
 
   "key": {
@@ -11,7 +12,7 @@
     }
   },
   "result": {
-    "item": "tksrwine:wine_bottle",
-    "count": 2
+    "item": "tksrwine:glass_bottle",
+    "count": 4
   }
 }
