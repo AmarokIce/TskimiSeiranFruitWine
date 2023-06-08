@@ -1,6 +1,7 @@
 package club.someoneice.vine.common;
 
 import club.someoneice.vine.core.TskimiSeiranVine;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class RecipeShaker implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
@@ -30,12 +32,16 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer container, Level world) {
+        List<ItemStack> itemList = Lists.newArrayList();
+        for (int o = 0; o < 12; o ++)
+            itemList.add(container.getItem(o).copy());
+
         for (int i = 0; i < recipeItems.size(); i ++) {
             boolean pass = false;
             for (int o = 0; o < 12; o ++) {
-                var item = container.getItem(o);
+                var item = itemList.get(o);
                 if (this.recipeItems.get(i).test(item)) {
-                    container.getItem(o).shrink(1);
+                    itemList.get(o).shrink(1);
                     pass = true;
                     break;
                 }

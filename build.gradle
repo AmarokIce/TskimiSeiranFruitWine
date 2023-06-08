@@ -87,11 +87,32 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
+
+    maven {
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
+
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
-    // implementation fileTree(dir: 'libs', includes: ['*.jar'])
+
+    compileOnly fg.deobf("mezz.jei:jei-1.18.2-common-api:10.2.1.283")
+    compileOnly fg.deobf("mezz.jei:jei-1.18.2-forge-api:10.2.1.283")
+
+    runtimeOnly fg.deobf("mezz.jei:jei-1.18.2-forge:10.2.1.283")
 }
 
 jar {

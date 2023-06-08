@@ -5,6 +5,7 @@ import club.someoneice.vine.common.gui.ContainerShaker;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
+import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.PotionInit;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -91,7 +92,13 @@ public class ShakerItem extends Item {
                     container.addItem(PotionUtils.setPotion(new ItemStack(this), PotionInit.tsks_s_soup.get()));
                 } else container.addItem(itm);
             }
+
             Optional<RecipeShaker> match = world.getRecipeManager().getRecipeFor(RecipeShaker.Type.INSTANCE, container, world);
+            if (!match.isPresent()) {
+                it.getStackInSlot(12).setCount(0);
+                it.insertItem(12, ItemStack.EMPTY, false);
+                return;
+            }
             match.ifPresent(recipe -> {
                 if (tag.getInt("shake_count") > recipe.getShaking())
                     it.insertItem(12, recipe.getResultItem(), false);
@@ -153,6 +160,11 @@ public class ShakerItem extends Item {
 
         public CapabilityHandle() {
             handler = LazyOptional.of(() -> new ItemStackHandler(13) {
+                @Override
+                public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                    return !stack.is(ItemInit.Shaker.get());
+                }
+
                 @Override
                 public int getSlotLimit(int slot) {
                     return 1;
