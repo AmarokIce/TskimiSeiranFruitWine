@@ -56,7 +56,24 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
 
     @Override
     public ItemStack assemble(SimpleContainer container) {
-        return null;
+        List<ItemStack> itemList = Lists.newArrayList();
+        for (int o = 0; o < 12; o ++)
+            itemList.add(container.getItem(o));
+
+        for (int i = 0; i < recipeItems.size(); i ++) {
+            boolean pass = false;
+            for (int o = 0; o < 12; o ++) {
+                var item = itemList.get(o);
+                if (this.recipeItems.get(i).test(item)) {
+                    itemList.get(o).shrink(1);
+                    pass = true;
+                    break;
+                }
+            }
+
+            if (!pass) return ItemStack.EMPTY;
+        }
+        return this.output;
     }
 
     @Override
