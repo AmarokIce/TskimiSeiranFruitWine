@@ -209,7 +209,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
 
         if (entity.hasWater && entity.hasWine && !entity.isFinish) {
             entity.time ++;
-            if (entity.time >= 5) {
+            if (entity.time >= 20 * 30) {
                 entity.progress += 1;
                 entity.time = 0;
             }

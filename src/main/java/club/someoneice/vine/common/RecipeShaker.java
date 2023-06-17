@@ -1,10 +1,12 @@
 package club.someoneice.vine.common;
 
 import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.init.RecipeInit;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -79,7 +81,7 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return RecipeInit.SHAKER_RECIPE.get();
     }
 
     @Override
