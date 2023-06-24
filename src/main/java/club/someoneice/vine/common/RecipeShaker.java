@@ -136,10 +136,9 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
         public RecipeShaker fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(it -> Ingredient.fromNetwork(buf));
-
             ItemStack output = buf.readItem();
-            int shaking = buf.readInt();
-            return new RecipeShaker(id, output, inputs, shaking);
+
+            return new RecipeShaker(id, output, inputs, 8);
         }
 
         @Override
