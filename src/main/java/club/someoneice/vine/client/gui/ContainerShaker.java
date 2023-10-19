@@ -1,7 +1,7 @@
-package club.someoneice.vine.common.gui;
+package club.someoneice.vine.client.gui;
 
 import club.someoneice.vine.common.item.ShakerItem;
-import club.someoneice.vine.init.GuiInit;
+import club.someoneice.vine.init.ContainerInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ public class ContainerShaker extends AbstractContainerMenu {
     }
 
     public ContainerShaker(int id, Inventory inventory) {
-        super(GuiInit.SHAKER_GUI.get(), id);
+        super(ContainerInit.SHAKER_GUI.get(), id);
 
         this.item = inventory.player.getMainHandItem();
         if (!(item.getItem() instanceof ShakerItem)) return;

@@ -1,6 +1,6 @@
 package club.someoneice.vine.common.block.boilers;
 
-import club.someoneice.vine.common.gui.ContainerBoilers;
+import club.someoneice.vine.client.gui.ContainerBoilers;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TagHelper;

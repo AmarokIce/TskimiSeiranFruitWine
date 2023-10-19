@@ -1,7 +1,7 @@
 package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.core.Data;
-import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.util.Utilities;
 import net.minecraft.network.chat.Component;

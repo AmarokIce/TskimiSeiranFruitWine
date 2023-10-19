@@ -6,7 +6,7 @@ import club.someoneice.vine.common.item.ShakerItem;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.common.item.cocktail.Cocktail;
 import club.someoneice.vine.common.item.cocktail.CocktailBase;
-import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.TskimiSeiranVine;
 import com.google.common.collect.Maps;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;

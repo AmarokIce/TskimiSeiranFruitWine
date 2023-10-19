@@ -1,5 +1,6 @@
 package club.someoneice.vine.core;
 
+import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.ItemInit;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;

@@ -1,4 +1,4 @@
-package club.someoneice.vine.common.gui;
+package club.someoneice.vine.client.gui;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

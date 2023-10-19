@@ -1,6 +1,6 @@
 package club.someoneice.vine.init;
 
-import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.TskimiSeiranVine;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.Potion;

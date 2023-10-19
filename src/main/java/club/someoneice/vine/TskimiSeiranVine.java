@@ -1,8 +1,11 @@
-package club.someoneice.vine.core;
+package club.someoneice.vine;
 
-import club.someoneice.vine.common.gui.GuiBarrel;
-import club.someoneice.vine.common.gui.GuiBoiler;
-import club.someoneice.vine.common.gui.GuiShaker;
+import club.someoneice.vine.client.gui.GuiBarrel;
+import club.someoneice.vine.client.gui.GuiBoiler;
+import club.someoneice.vine.client.gui.GuiShaker;
+import club.someoneice.vine.core.Data;
+import club.someoneice.vine.core.TagHelper;
+import club.someoneice.vine.core.VanillaEvent;
 import club.someoneice.vine.init.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,7 +15,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +53,7 @@ public class TskimiSeiranVine {
         ItemInit.init(bus);
         BlockInit.BLOCKS.register(bus);
         TileInit.TILE_ENTITIES.register(bus);
-        GuiInit.GuiList.register(bus);
+        ContainerInit.CONTAINERS.register(bus);
         RecipeInit.RecipesList.register(bus);
 
         MinecraftForge.EVENT_BUS.register(new VanillaEvent());
@@ -64,9 +66,9 @@ public class TskimiSeiranVine {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        MenuScreens.register(GuiInit.BARREL_GUI.get(), GuiBarrel::new);
-        MenuScreens.register(GuiInit.BOILER_GUI.get(), GuiBoiler::new);
-        MenuScreens.register(GuiInit.SHAKER_GUI.get(), GuiShaker::new);
+        MenuScreens.register(ContainerInit.BARREL_GUI.get(), GuiBarrel::new);
+        MenuScreens.register(ContainerInit.BOILER_GUI.get(), GuiBoiler::new);
+        MenuScreens.register(ContainerInit.SHAKER_GUI.get(), GuiShaker::new);
     }
 
 

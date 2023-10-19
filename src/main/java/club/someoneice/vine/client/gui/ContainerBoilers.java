@@ -1,8 +1,8 @@
-package club.someoneice.vine.common.gui;
+package club.someoneice.vine.client.gui;
 
 import club.someoneice.vine.common.block.boilers.DistillationBoilerEntity;
 import club.someoneice.vine.init.BlockInit;
-import club.someoneice.vine.init.GuiInit;
+import club.someoneice.vine.init.ContainerInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class ContainerBoilers extends AbstractContainerMenu {
     }
 
     public ContainerBoilers(int id, Inventory inv, DistillationBoilerEntity entity, ContainerData data) {
-        super(GuiInit.BOILER_GUI.get(), id);
+        super(ContainerInit.BOILER_GUI.get(), id);
         this.world = entity.getLevel();
         this.entity = entity;
         this.inventory = inv;
