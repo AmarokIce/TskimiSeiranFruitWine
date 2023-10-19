@@ -1,10 +1,10 @@
 package club.someoneice.vine.init;
 
+import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.common.block.barrel.BrewingBarrel;
 import club.someoneice.vine.common.block.boilers.DistillationBoiler;
 import club.someoneice.vine.common.item.cocktail.Cocktail;
 import club.someoneice.vine.common.item.cocktail.Goblet;
-import club.someoneice.vine.TskimiSeiranVine;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

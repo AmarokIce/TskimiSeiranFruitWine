@@ -1,12 +1,12 @@
 package club.someoneice.vine.init;
 
+import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.common.item.Flagon;
 import club.someoneice.vine.common.item.PotionSoup;
 import club.someoneice.vine.common.item.ShakerItem;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.common.item.cocktail.Cocktail;
 import club.someoneice.vine.common.item.cocktail.CocktailBase;
-import club.someoneice.vine.TskimiSeiranVine;
 import com.google.common.collect.Maps;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -37,19 +37,19 @@ public class ItemInit {
     public static RegistryObject<Item> WineBottle = ITEMS.register("wine_bottle", () -> new Item(new Item.Properties().tab(TskimiSeiranVine.TAB)));
 
     // 酿造
-    public static Wine Cider = new Wine("apple_cider",3);
-    public static Wine MilkWine = new Wine("milk_wine",3);
-    public static Wine HoneyWine = new Wine("honey_wine",3);
-    public static Wine BerriesWine = new Wine("berries_wine",3);
-    public static Wine GlowBerriesWine = new Wine("glow_berries_wine",3);
-    public static Wine Beer = new Wine("beer",3);
-    public static Wine Cherry = new Wine("cherry",2);
-    public static Wine Peach = new Wine("peach",2);
-    public static Wine Pineapple = new Wine("pineapple",2);
-    public static Wine Lemon = new Wine("lemon",2);
-    public static Wine Coconut = new Wine("coconut",2);
-    public static Wine Pear = new Wine("pear",2);
-    public static Wine Strawberry = new Wine("strawberry",2);
+    public static Wine Cider = new Wine("apple_cider", 3);
+    public static Wine MilkWine = new Wine("milk_wine", 3);
+    public static Wine HoneyWine = new Wine("honey_wine", 3);
+    public static Wine BerriesWine = new Wine("berries_wine", 3);
+    public static Wine GlowBerriesWine = new Wine("glow_berries_wine", 3);
+    public static Wine Beer = new Wine("beer", 3);
+    public static Wine Cherry = new Wine("cherry", 2);
+    public static Wine Peach = new Wine("peach", 2);
+    public static Wine Pineapple = new Wine("pineapple", 2);
+    public static Wine Lemon = new Wine("lemon", 2);
+    public static Wine Coconut = new Wine("coconut", 2);
+    public static Wine Pear = new Wine("pear", 2);
+    public static Wine Strawberry = new Wine("strawberry", 2);
 
     // 蒸馏
     public static Wine Vodka = new Wine("vodka", 4);

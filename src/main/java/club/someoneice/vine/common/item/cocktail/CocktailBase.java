@@ -11,7 +11,8 @@ import net.minecraft.world.level.Level;
 
 public class CocktailBase extends Item {
     protected MobEffect[] effects;
-    public CocktailBase(Properties properties, MobEffect ... effects) {
+
+    public CocktailBase(Properties properties, MobEffect... effects) {
         super(properties.stacksTo(1));
         this.effects = effects;
     }

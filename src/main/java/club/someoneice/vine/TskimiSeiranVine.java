@@ -27,21 +27,24 @@ public class TskimiSeiranVine {
     public static final boolean isCroptopiaInstalled = ModList.get().isLoaded("croptopia");
 
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
-        @Nonnull @Override
+        @Nonnull
+        @Override
         public ItemStack makeIcon() {
             return new ItemStack(ItemInit.Flagon.get());
         }
     };
 
     public static final CreativeModeTab WINE_TAB = new CreativeModeTab(MODID + ".wine") {
-        @Nonnull @Override
+        @Nonnull
+        @Override
         public ItemStack makeIcon() {
             return new ItemStack(ItemInit.Cider.cup.get());
         }
     };
 
     public static final CreativeModeTab COCKTAIL_TAB = new CreativeModeTab(MODID + ".cocktail") {
-        @Nonnull @Override
+        @Nonnull
+        @Override
         public ItemStack makeIcon() {
             return new ItemStack(ItemInit.NoneCocktail.get());
         }

@@ -51,9 +51,10 @@ public class DistillationBoiler extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack item) {
         var tag = item.getOrCreateTag();
-        if(tag.contains("contents")){
+        if (tag.contains("contents")) {
             BlockEntity blockentity = world.getBlockEntity(pos);
-            if(blockentity instanceof DistillationBoilerEntity db) db.loadItemListFromTag((ListTag) tag.get("contents"));
+            if (blockentity instanceof DistillationBoilerEntity db)
+                db.loadItemListFromTag((ListTag) tag.get("contents"));
         }
     }
 
@@ -164,8 +165,8 @@ public class DistillationBoiler extends BaseEntityBlock {
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         var ret = ItemInit.DistillationBoilerItem.get().getDefaultInstance();
         BlockEntity blockentity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if(blockentity instanceof DistillationBoilerEntity db){
-            if(!db.isItemListEmpty()){
+        if (blockentity instanceof DistillationBoilerEntity db) {
+            if (!db.isItemListEmpty()) {
                 var tag = ret.getOrCreateTag();
                 tag.put("contents", db.createItemListTag());
             }

@@ -35,6 +35,7 @@ public class Cocktail {
     public static class CocktailBlock extends Block {
         String name;
         int hunger;
+
         public CocktailBlock(int hunger) {
             super(Properties.copy(Blocks.GLASS).noOcclusion());
             this.hunger = hunger;
@@ -81,7 +82,8 @@ public class Cocktail {
 
         public ItemStack finishUsingItem(ItemStack item, Level world, LivingEntity entity) {
             super.finishUsingItem(item, world, entity);
-            if (entity instanceof Player player) Utilities.addItem2PlayerOrDrop(player, new ItemStack(ItemInit.Goblet.get()));
+            if (entity instanceof Player player)
+                Utilities.addItem2PlayerOrDrop(player, new ItemStack(ItemInit.Goblet.get()));
             return item;
         }
 

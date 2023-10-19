@@ -52,9 +52,9 @@ public class BrewingBarrel extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack item) {
         var tag = item.getOrCreateTag();
-        if(tag.contains("contents")){
+        if (tag.contains("contents")) {
             BlockEntity blockentity = world.getBlockEntity(pos);
-            if(blockentity instanceof BrewingBarrelEntity bb){
+            if (blockentity instanceof BrewingBarrelEntity bb) {
                 bb.loadItemListFromTag((ListTag) tag.get("contents"));
             }
         }
@@ -165,8 +165,8 @@ public class BrewingBarrel extends BaseEntityBlock {
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
         var ret = ItemInit.BrewingBarrelItem.get().getDefaultInstance();
         BlockEntity blockentity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if(blockentity instanceof BrewingBarrelEntity bb){
-            if(!bb.isItemListEmpty()){
+        if (blockentity instanceof BrewingBarrelEntity bb) {
+            if (!bb.isItemListEmpty()) {
                 var tag = ret.getOrCreateTag();
                 tag.put("contents", bb.createItemListTag());
             }

@@ -6,6 +6,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class SlotInput extends SlotItemHandler {
     int index;
+
     public SlotInput(IItemHandler itemHandler, int index, int x, int y) {
         super(itemHandler, index, x, y);
         this.index = index;

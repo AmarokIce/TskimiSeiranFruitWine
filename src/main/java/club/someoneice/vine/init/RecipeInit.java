@@ -1,7 +1,7 @@
 package club.someoneice.vine.init;
 
-import club.someoneice.vine.common.RecipeShaker;
 import club.someoneice.vine.TskimiSeiranVine;
+import club.someoneice.vine.common.RecipeShaker;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

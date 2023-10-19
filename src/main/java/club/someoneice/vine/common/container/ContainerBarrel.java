@@ -49,8 +49,9 @@ public class ContainerBarrel extends AbstractContainerMenu {
     }
 
     private void addPlayerInventory(Inventory inventory) {
-        for (int i = 0; i < 3; ++i) for (int l = 0; l < 9; ++l)
-            this.addSlot(new Slot(inventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+        for (int i = 0; i < 3; ++i)
+            for (int l = 0; l < 9; ++l)
+                this.addSlot(new Slot(inventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
     }
 
     private void addPlayerHotbar(Inventory inventory) {
