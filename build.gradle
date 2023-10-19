@@ -4,9 +4,9 @@ plugins {
     id 'maven-publish'
 }
 
-version = '1.6'
+version = '1.7'
 group = 'club.someoneice.vine'
-archivesBaseName = 'TSKimiSeiranFruitWine-Forge'
+archivesBaseName = "TSKimiSeiranFruitWine-Forge-${project.minecraft_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
