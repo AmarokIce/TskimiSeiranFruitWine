@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -53,7 +54,7 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess pRegistryAccess) {
         List<ItemStack> itemList = Lists.newArrayList();
         for (int o = 0; o < 12; o++)
             itemList.add(container.getItem(o));
@@ -80,8 +81,12 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.output;
+    }
+
+    public ItemStack getOutput() {
+        return output;
     }
 
     @Override
@@ -137,7 +142,6 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(it -> Ingredient.fromNetwork(buf));
             ItemStack output = buf.readItem();
-
             return new RecipeShaker(id, output, inputs, 8);
         }
 
@@ -145,13 +149,8 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
         public void toNetwork(FriendlyByteBuf buf, RecipeShaker recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) ing.toNetwork(buf);
-
-            buf.writeItemStack(recipe.getResultItem(), false);
-        }
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass() {
-            return (Class<G>) RecipeSerializer.class;
+            buf.writeItemStack(recipe.getOutput(), false);
+            // TODO: getResultItem -> getOutput, needs check
         }
     }
 }

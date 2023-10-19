@@ -19,7 +19,7 @@ public class ContainerBarrel extends AbstractContainerMenu {
     final ContainerData data;
 
     public ContainerBarrel(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, (BrewingBarrelEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
+        this(id, inv, (BrewingBarrelEntity) inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(1));
     }
 
     public ContainerBarrel(int id, Inventory inv, BrewingBarrelEntity entity, ContainerData data) {

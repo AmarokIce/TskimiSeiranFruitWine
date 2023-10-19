@@ -1,6 +1,5 @@
 package club.someoneice.vine.common.item;
 
-import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.util.Utilities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -22,7 +21,7 @@ import java.util.List;
 public class Flagon extends Item {
 
     public Flagon() {
-        super(new Properties().stacksTo(1).tab(TskimiSeiranVine.TAB));
+        super(new Properties().stacksTo(1));
     }
 
     @Override

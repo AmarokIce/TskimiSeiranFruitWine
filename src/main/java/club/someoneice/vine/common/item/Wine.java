@@ -1,6 +1,6 @@
 package club.someoneice.vine.common.item;
 
-import club.someoneice.vine.TskimiSeiranVine;
+import club.someoneice.vine.common.item.group.CreativeModeTabDef;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.util.Utilities;
@@ -28,11 +28,16 @@ public class Wine {
     public Wine(String name, int hunger) {
         this.name = "tsfWine." + name;
 
-        bucket = ItemInit.ITEMS.register(name + "_bucket", () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger), Items.BUCKET));
-        wineBottle = ItemInit.ITEMS.register(name + "_wine", () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger), ItemInit.WineBottle.get()));
-        bottle = ItemInit.ITEMS.register(name + "_bottle", () -> new WineItem(WineEnum.BOTTLE, name, WineItem.propertiesHelper(hunger), Items.GLASS_BOTTLE));
-        glass = ItemInit.ITEMS.register(name + "_glass", () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()));
-        cup = ItemInit.ITEMS.register(name + "_cup", () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()));
+        bucket = ItemInit.registerWithTab(name + "_bucket",
+                () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger), Items.BUCKET), CreativeModeTabDef.WINE_TAB);
+        wineBottle = ItemInit.registerWithTab(name + "_wine",
+                () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger), ItemInit.WineBottle.get()), CreativeModeTabDef.WINE_TAB);
+        bottle = ItemInit.registerWithTab(name + "_bottle",
+                () -> new WineItem(WineEnum.BOTTLE, name, WineItem.propertiesHelper(hunger), Items.GLASS_BOTTLE), CreativeModeTabDef.WINE_TAB);
+        glass = ItemInit.registerWithTab(name + "_glass",
+                () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()), CreativeModeTabDef.WINE_TAB);
+        cup = ItemInit.registerWithTab(name + "_cup",
+                () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()), CreativeModeTabDef.WINE_TAB);
 
         Data.wineMap.put("tsfWine." + name, this);
     }
@@ -105,7 +110,6 @@ public class Wine {
             builder.saturationMod((float) ((Math.max(hunger - 2, 0)) / 10));
             builder.alwaysEat();
             properties.food(builder.build());
-            properties.tab(TskimiSeiranVine.WINE_TAB);
             properties.stacksTo(8);
             return properties;
         }

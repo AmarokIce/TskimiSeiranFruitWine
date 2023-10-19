@@ -1,6 +1,5 @@
 package club.someoneice.vine.common.item.cocktail;
 
-import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.util.Utilities;
@@ -23,7 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -54,7 +53,7 @@ public class Cocktail {
         }
 
         @Override
-        public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
+        public List<ItemStack> getDrops(BlockState state, LootParams.Builder loot) {
             var itemList = new ArrayList<ItemStack>();
             itemList.add(new ItemStack(this.asItem()));
             return itemList;
@@ -94,7 +93,6 @@ public class Cocktail {
             builder.saturationMod(Math.max(hunger - 2, 0));
             builder.alwaysEat();
             properties.food(builder.build());
-            properties.tab(TskimiSeiranVine.COCKTAIL_TAB);
             properties.stacksTo(8);
             return properties;
         }

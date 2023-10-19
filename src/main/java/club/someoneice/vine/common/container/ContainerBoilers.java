@@ -19,7 +19,7 @@ public class ContainerBoilers extends AbstractContainerMenu {
     ContainerData data;
 
     public ContainerBoilers(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, (DistillationBoilerEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, (DistillationBoilerEntity) inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
     public ContainerBoilers(int id, Inventory inv, DistillationBoilerEntity entity, ContainerData data) {

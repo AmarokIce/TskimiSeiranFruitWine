@@ -1,6 +1,5 @@
 package club.someoneice.vine.common.item;
 
-import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.common.RecipeShaker;
 import club.someoneice.vine.common.container.ContainerShaker;
 import club.someoneice.vine.core.Data;
@@ -36,7 +35,7 @@ import java.util.Optional;
 
 public class ShakerItem extends Item {
     public ShakerItem() {
-        super(new Properties().tab(TskimiSeiranVine.TAB).stacksTo(1));
+        super(new Properties().stacksTo(1));
     }
 
     @Override
@@ -105,7 +104,7 @@ public class ShakerItem extends Item {
             }
             match.ifPresent(recipe -> {
                 if (tag.getInt("shake_count") > recipe.getShaking())
-                    it.insertItem(12, recipe.getResultItem(), false);
+                    it.insertItem(12, recipe.getResultItem(world.registryAccess()), false);
             });
         });
     }
