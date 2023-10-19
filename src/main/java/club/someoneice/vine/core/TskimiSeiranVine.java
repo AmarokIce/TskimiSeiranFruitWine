@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,7 +22,7 @@ import javax.annotation.Nonnull;
 public class TskimiSeiranVine {
     public static final String MODID = "tksrwine";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final boolean isCroptopiaInstall = FMLLoader.getLoadingModList().getModFileById("croptopia") != null;
+    public static final boolean isCroptopiaInstalled = ModList.get().isLoaded("croptopia");
 
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
         @Nonnull @Override
@@ -58,7 +59,7 @@ public class TskimiSeiranVine {
         bus.addListener(this::clientSetup);
 
         // WineData init.
-        new TagHelper();
+        TagHelper.init();
         Data.init();
     }
 
