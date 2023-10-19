@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class RecipeShaker implements Recipe<SimpleContainer> {
@@ -146,22 +145,6 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
             for (Ingredient ing : recipe.getIngredients()) ing.toNetwork(buf);
 
             buf.writeItemStack(recipe.getResultItem(), false);
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return Serializer.INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return Serializer.ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass();
         }
 
         @SuppressWarnings("unchecked")

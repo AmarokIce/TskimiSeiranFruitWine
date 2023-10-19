@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,7 +62,7 @@ public class DistillationBoiler extends BaseEntityBlock {
         if (world.isClientSide) return InteractionResult.SUCCESS;
         if (world.getBlockEntity(pos) instanceof DistillationBoilerEntity entity) {
             if (player.isShiftKeyDown()) {
-                NetworkHooks.openGui(((ServerPlayer) player), entity, pos);
+                NetworkHooks.openScreen(((ServerPlayer) player), entity, pos);
                 return InteractionResult.sidedSuccess(true);
             } else {
                 var item = player.getMainHandItem();
@@ -77,7 +77,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                     } else if (!entity.hasWine && entity.setWine(item)) return InteractionResult.SUCCESS;
                 } else {
                     if (item.is(ItemInit.WineBottle.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() < 4) return;
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
                             var itm = it.extractItem(1, 4, false);
@@ -87,7 +87,7 @@ public class DistillationBoiler extends BaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(ItemInit.Cup.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
                             Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).cup.get().getDefaultInstance());
@@ -96,7 +96,7 @@ public class DistillationBoiler extends BaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(Items.GLASS_BOTTLE)) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
                             Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bottle.get().getDefaultInstance());
@@ -105,7 +105,7 @@ public class DistillationBoiler extends BaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(ItemInit.GlassBottle.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             var itm = it.extractItem(1, 1, false);
                             Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).glass.get().getDefaultInstance());
                             if (it.getStackInSlot(1) == ItemStack.EMPTY) entity.init();
@@ -114,7 +114,7 @@ public class DistillationBoiler extends BaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(Items.BUCKET)) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() < 4) return;
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
 

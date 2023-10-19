@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class ContainerBarrel extends AbstractContainerMenu {
     Level world;
@@ -32,7 +32,7 @@ public class ContainerBarrel extends AbstractContainerMenu {
 
         this.addPlayerHotbar(inv);
         this.addPlayerInventory(inv);
-        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
             addSlot(new SlotWine(it, 0, 55, 27));
             addSlot(new SlotWine(it, 1, 108, 27));
         });

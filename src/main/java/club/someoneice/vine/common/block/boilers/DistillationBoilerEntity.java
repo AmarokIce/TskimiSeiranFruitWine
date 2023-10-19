@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -27,8 +26,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -148,7 +147,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return handler.cast();
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return handler.cast();
         return super.getCapability(cap, side);
     }
 
@@ -187,7 +186,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
         ItemStack finalWine = new ItemStack(wine.wineBottle.get(), 8);
         final ItemStack finalItem = item.copy();
         finalItem.setCount(16);
-        this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+        this.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
             it.insertItem(0, finalItem, false);
             it.insertItem(1, finalWine, false);
         });
@@ -218,7 +217,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
         }
 
         if (entity.isFinish) {
-            entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                 it.getStackInSlot(0).setCount(0);
             });
         }
@@ -226,7 +225,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block.tksrwine.distillation_boiler");
+        return Component.translatable("block.tksrwine.distillation_boiler");
     }
 
     @Override

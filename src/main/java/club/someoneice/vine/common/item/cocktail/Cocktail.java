@@ -45,7 +45,7 @@ public class Cocktail {
             if (!world.isClientSide) {
                 player.getFoodData().eat(hunger, hunger - 2);
                 world.setBlock(pos, BlockInit.GobletBlock.get().defaultBlockState(), 0);
-                world.gameEvent(GameEvent.BLOCK_CHANGE, pos);
+                world.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.GENERIC_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
             }
 

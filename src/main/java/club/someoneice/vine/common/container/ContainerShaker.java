@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class ContainerShaker extends AbstractContainerMenu {
     ItemStack item;
@@ -27,9 +27,10 @@ public class ContainerShaker extends AbstractContainerMenu {
         addPlayerInventory(inventory);
 
         // F**k you, Capability.
-        item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
-            for (int i = 0; i < 3; i ++) for (int o = 0; o < 4; o ++)
-                addSlot(new SlotInput(it, o + i * 4, 33 + o * 18, 12 + i * 18));
+        item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
+            for (int i = 0; i < 3; i++)
+                for (int o = 0; o < 4; o++)
+                    addSlot(new SlotInput(it, o + i * 4, 33 + o * 18, 12 + i * 18));
             addSlot(new SlotWine(it, 12, 133, 30));
         });
     }

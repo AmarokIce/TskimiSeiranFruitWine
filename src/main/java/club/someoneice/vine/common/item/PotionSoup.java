@@ -4,7 +4,6 @@ import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.PotionInit;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.LingeringPotionItem;
@@ -28,12 +27,12 @@ public class PotionSoup extends LingeringPotionItem {
 
     @Override
     public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("message.rebbitsoup.potion"));
+        list.add(Component.translatable("message.rebbitsoup.potion"));
     }
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-        if (this.allowdedIn(tab)) {
+        if (this.allowedIn(tab)) {
             list.add(PotionUtils.setPotion(new ItemStack(this), PotionInit.tsks_s_soup.get()));
         }
     }
