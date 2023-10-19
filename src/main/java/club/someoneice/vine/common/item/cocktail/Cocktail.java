@@ -3,6 +3,7 @@ package club.someoneice.vine.common.item.cocktail;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -80,7 +81,7 @@ public class Cocktail {
 
         public ItemStack finishUsingItem(ItemStack item, Level world, LivingEntity entity) {
             super.finishUsingItem(item, world, entity);
-            if (entity instanceof Player player) player.addItem(new ItemStack(ItemInit.Goblet.get()));
+            if (entity instanceof Player player) Utilities.addItem2PlayerOrDrop(player, new ItemStack(ItemInit.Goblet.get()));
             return item;
         }
 

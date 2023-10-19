@@ -1,6 +1,7 @@
 package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -63,7 +64,7 @@ public class Flagon extends Item {
 
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.NEUTRAL, 1.0F, 1.0F);
             player.getItemInHand(ahand).shrink(1);
-            player.addItem(new ItemStack(wine.returnItem));
+            Utilities.addItem2PlayerOrDrop(player, new ItemStack(wine.returnItem));
         }
 
         return InteractionResultHolder.success(itemstack);

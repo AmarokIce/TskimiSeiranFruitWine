@@ -7,6 +7,7 @@ import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.PotionInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
@@ -67,7 +68,9 @@ public class ShakerItem extends Item {
             checkRecipes(context.getItemInHand(), context.getLevel());
             context.getItemInHand().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
                 if (!it.getStackInSlot(12).isEmpty()) {
-                    context.getPlayer().addItem(it.getStackInSlot(12).copy());
+                    final Player player = context.getPlayer();
+                    if (player == null) return;
+                    Utilities.addItem2PlayerOrDrop(player, it.getStackInSlot(12).copy());
                     it.getStackInSlot(12).setCount(0);
                 } else context.getLevel().setBlock(context.getClickedPos(), BlockInit.NoneCocktail.get().defaultBlockState(), 3);
                 removeItem(context.getItemInHand());

@@ -4,6 +4,7 @@ import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.TileInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,7 +72,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                         entity.setWater();
                         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
                         item.shrink(1);
-                        player.addItem(Items.BUCKET.getDefaultInstance());
+                        Utilities.addItem2PlayerOrDrop(player, Items.BUCKET.getDefaultInstance());
                         return InteractionResult.SUCCESS;
                     } else if (!entity.hasWine && entity.setWine(item)) return InteractionResult.SUCCESS;
                 } else {
@@ -80,7 +81,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                             if (it.getStackInSlot(1).getCount() < 4) return;
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
                             var itm = it.extractItem(1, 4, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).wineBottle.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).wineBottle.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
@@ -89,7 +90,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).cup.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).cup.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
@@ -98,7 +99,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bottle.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bottle.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
@@ -106,7 +107,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                     } else if (item.is(ItemInit.GlassBottle.get())) {
                         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).glass.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).glass.get().getDefaultInstance());
                             if (it.getStackInSlot(1) == ItemStack.EMPTY) entity.init();
                         });
                         item.shrink(1);
@@ -118,7 +119,7 @@ public class DistillationBoiler extends BaseEntityBlock {
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
 
                             var itm = it.extractItem(1, 4, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bucket.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bucket.get().getDefaultInstance());
                         });
                         item.shrink(1);
 

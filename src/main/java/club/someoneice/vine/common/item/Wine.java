@@ -3,6 +3,7 @@ package club.someoneice.vine.common.item;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.ItemInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
@@ -84,7 +85,7 @@ public class Wine {
                 if (nbt.getInt("wine") == 0) {
                     item.shrink(1);
                     nbt.putInt("wine", 4);
-                    player.addItem(new ItemStack(this.returnItem));
+                    Utilities.addItem2PlayerOrDrop(player, new ItemStack(this.returnItem));
                 }
             }
 
