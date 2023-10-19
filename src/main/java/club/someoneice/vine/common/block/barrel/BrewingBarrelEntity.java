@@ -1,6 +1,6 @@
 package club.someoneice.vine.common.block.barrel;
 
-import club.someoneice.vine.client.gui.ContainerBarrel;
+import club.someoneice.vine.common.container.ContainerBarrel;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TagHelper;

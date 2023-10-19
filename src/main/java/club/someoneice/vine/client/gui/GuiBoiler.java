@@ -1,6 +1,7 @@
 package club.someoneice.vine.client.gui;
 
 import club.someoneice.vine.TskimiSeiranVine;
+import club.someoneice.vine.common.container.ContainerBoilers;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

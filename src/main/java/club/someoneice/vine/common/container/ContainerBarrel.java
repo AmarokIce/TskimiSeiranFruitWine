@@ -1,6 +1,7 @@
-package club.someoneice.vine.client.gui;
+package club.someoneice.vine.common.container;
 
 import club.someoneice.vine.common.block.barrel.BrewingBarrelEntity;
+import club.someoneice.vine.common.container.slot.SlotWine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ContainerInit;
 import net.minecraft.network.FriendlyByteBuf;

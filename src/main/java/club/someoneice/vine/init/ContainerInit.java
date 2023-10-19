@@ -1,8 +1,8 @@
 package club.someoneice.vine.init;
 
-import club.someoneice.vine.client.gui.ContainerBarrel;
-import club.someoneice.vine.client.gui.ContainerBoilers;
-import club.someoneice.vine.client.gui.ContainerShaker;
+import club.someoneice.vine.common.container.ContainerBarrel;
+import club.someoneice.vine.common.container.ContainerBoilers;
+import club.someoneice.vine.common.container.ContainerShaker;
 import club.someoneice.vine.TskimiSeiranVine;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;

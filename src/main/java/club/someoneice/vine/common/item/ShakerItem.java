@@ -1,7 +1,7 @@
 package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.common.RecipeShaker;
-import club.someoneice.vine.client.gui.ContainerShaker;
+import club.someoneice.vine.common.container.ContainerShaker;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
