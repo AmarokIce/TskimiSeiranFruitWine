@@ -4,6 +4,7 @@ import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.TileInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,10 +30,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,9 +51,10 @@ public class DistillationBoiler extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity entity, ItemStack item) {
         var tag = item.getOrCreateTag();
-        if(tag.contains("contents")){
+        if (tag.contains("contents")) {
             BlockEntity blockentity = world.getBlockEntity(pos);
-            if(blockentity instanceof DistillationBoilerEntity db) db.loadItemListFromTag((ListTag) tag.get("contents"));
+            if (blockentity instanceof DistillationBoilerEntity db)
+                db.loadItemListFromTag((ListTag) tag.get("contents"));
         }
     }
 
@@ -61,7 +63,7 @@ public class DistillationBoiler extends BaseEntityBlock {
         if (world.isClientSide) return InteractionResult.SUCCESS;
         if (world.getBlockEntity(pos) instanceof DistillationBoilerEntity entity) {
             if (player.isShiftKeyDown()) {
-                NetworkHooks.openGui(((ServerPlayer) player), entity, pos);
+                NetworkHooks.openScreen(((ServerPlayer) player), entity, pos);
                 return InteractionResult.sidedSuccess(true);
             } else {
                 var item = player.getMainHandItem();
@@ -71,54 +73,54 @@ public class DistillationBoiler extends BaseEntityBlock {
                         entity.setWater();
                         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
                         item.shrink(1);
-                        player.addItem(Items.BUCKET.getDefaultInstance());
+                        Utilities.addItem2PlayerOrDrop(player, Items.BUCKET.getDefaultInstance());
                         return InteractionResult.SUCCESS;
                     } else if (!entity.hasWine && entity.setWine(item)) return InteractionResult.SUCCESS;
                 } else {
                     if (item.is(ItemInit.WineBottle.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() < 4) return;
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
                             var itm = it.extractItem(1, 4, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).wineBottle.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).wineBottle.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(ItemInit.Cup.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).cup.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).cup.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(Items.GLASS_BOTTLE)) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() - 1 == 0) entity.init();
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bottle.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bottle.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(ItemInit.GlassBottle.get())) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             var itm = it.extractItem(1, 1, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).glass.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).glass.get().getDefaultInstance());
                             if (it.getStackInSlot(1) == ItemStack.EMPTY) entity.init();
                         });
                         item.shrink(1);
 
                         return InteractionResult.SUCCESS;
                     } else if (item.is(Items.BUCKET)) {
-                        entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+                        entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                             if (it.getStackInSlot(1).getCount() < 4) return;
                             if (it.getStackInSlot(1).getCount() - 4 == 0) entity.init();
 
                             var itm = it.extractItem(1, 4, false);
-                            player.addItem(Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bucket.get().getDefaultInstance());
+                            Utilities.addItem2PlayerOrDrop(player, Data.wineMap.get(((Wine.WineItem) itm.getItem()).name).bucket.get().getDefaultInstance());
                         });
                         item.shrink(1);
 
@@ -160,11 +162,11 @@ public class DistillationBoiler extends BaseEntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         var ret = ItemInit.DistillationBoilerItem.get().getDefaultInstance();
         BlockEntity blockentity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if(blockentity instanceof DistillationBoilerEntity db){
-            if(!db.isItemListEmpty()){
+        if (blockentity instanceof DistillationBoilerEntity db) {
+            if (!db.isItemListEmpty()) {
                 var tag = ret.getOrCreateTag();
                 tag.put("contents", db.createItemListTag());
             }

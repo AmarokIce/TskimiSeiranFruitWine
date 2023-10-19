@@ -1,23 +1,26 @@
-package club.someoneice.vine.common.gui;
+package club.someoneice.vine.common.container;
 
+import club.someoneice.vine.common.container.slot.SlotInput;
+import club.someoneice.vine.common.container.slot.SlotWine;
 import club.someoneice.vine.common.item.ShakerItem;
-import club.someoneice.vine.init.GuiInit;
+import club.someoneice.vine.init.ContainerInit;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class ContainerShaker extends AbstractContainerMenu {
     ItemStack item;
+
     public ContainerShaker(int pContainerId, Inventory inv, FriendlyByteBuf data) {
         this(pContainerId, inv);
     }
 
     public ContainerShaker(int id, Inventory inventory) {
-        super(GuiInit.SHAKER_GUI.get(), id);
+        super(ContainerInit.SHAKER_GUI.get(), id);
 
         this.item = inventory.player.getMainHandItem();
         if (!(item.getItem() instanceof ShakerItem)) return;
@@ -25,9 +28,10 @@ public class ContainerShaker extends AbstractContainerMenu {
         addPlayerInventory(inventory);
 
         // F**k you, Capability.
-        item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
-            for (int i = 0; i < 3; i ++) for (int o = 0; o < 4; o ++)
-                addSlot(new SlotInput(it, o + i * 4, 33 + o * 18, 12 + i * 18));
+        item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
+            for (int i = 0; i < 3; i++)
+                for (int o = 0; o < 4; o++)
+                    addSlot(new SlotInput(it, o + i * 4, 33 + o * 18, 12 + i * 18));
             addSlot(new SlotWine(it, 12, 133, 30));
         });
     }
@@ -72,8 +76,9 @@ public class ContainerShaker extends AbstractContainerMenu {
     }
 
     private void addPlayerInventory(Inventory inventory) {
-        for (int i = 0; i < 3; ++i) for (int l = 0; l < 9; ++l)
-            this.addSlot(new Slot(inventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+        for (int i = 0; i < 3; ++i)
+            for (int l = 0; l < 9; ++l)
+                this.addSlot(new Slot(inventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
     }
 
     private void addPlayerHotbar(Inventory inventory) {

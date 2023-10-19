@@ -1,8 +1,8 @@
 package club.someoneice.vine.common.item.cocktail;
 
-import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -34,6 +34,7 @@ public class Cocktail {
     public static class CocktailBlock extends Block {
         String name;
         int hunger;
+
         public CocktailBlock(int hunger) {
             super(Properties.copy(Blocks.GLASS).noOcclusion());
             this.hunger = hunger;
@@ -44,7 +45,7 @@ public class Cocktail {
             if (!world.isClientSide) {
                 player.getFoodData().eat(hunger, hunger - 2);
                 world.setBlock(pos, BlockInit.GobletBlock.get().defaultBlockState(), 0);
-                world.gameEvent(GameEvent.BLOCK_CHANGE, pos);
+                world.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                 world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.GENERIC_DRINK, SoundSource.NEUTRAL, 1.0F, 1.0F);
             }
 
@@ -52,7 +53,7 @@ public class Cocktail {
         }
 
         @Override
-        public List<ItemStack> getDrops(BlockState state, LootContext.Builder loot) {
+        public List<ItemStack> getDrops(BlockState state, LootParams.Builder loot) {
             var itemList = new ArrayList<ItemStack>();
             itemList.add(new ItemStack(this.asItem()));
             return itemList;
@@ -80,7 +81,8 @@ public class Cocktail {
 
         public ItemStack finishUsingItem(ItemStack item, Level world, LivingEntity entity) {
             super.finishUsingItem(item, world, entity);
-            if (entity instanceof Player player) player.addItem(new ItemStack(ItemInit.Goblet.get()));
+            if (entity instanceof Player player)
+                Utilities.addItem2PlayerOrDrop(player, new ItemStack(ItemInit.Goblet.get()));
             return item;
         }
 
@@ -91,7 +93,6 @@ public class Cocktail {
             builder.saturationMod(Math.max(hunger - 2, 0));
             builder.alwaysEat();
             properties.food(builder.build());
-            properties.tab(TskimiSeiranVine.COCKTAIL_TAB);
             properties.stacksTo(8);
             return properties;
         }

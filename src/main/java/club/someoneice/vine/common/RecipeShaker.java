@@ -1,12 +1,12 @@
 package club.someoneice.vine.common;
 
-import club.someoneice.vine.core.TskimiSeiranVine;
+import club.someoneice.vine.TskimiSeiranVine;
 import club.someoneice.vine.init.RecipeInit;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class RecipeShaker implements Recipe<SimpleContainer> {
@@ -35,12 +34,12 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     @Override
     public boolean matches(SimpleContainer container, Level world) {
         List<ItemStack> itemList = Lists.newArrayList();
-        for (int o = 0; o < 12; o ++)
+        for (int o = 0; o < 12; o++)
             itemList.add(container.getItem(o).copy());
 
-        for (int i = 0; i < recipeItems.size(); i ++) {
+        for (int i = 0; i < recipeItems.size(); i++) {
             boolean pass = false;
-            for (int o = 0; o < 12; o ++) {
+            for (int o = 0; o < 12; o++) {
                 var item = itemList.get(o);
                 if (this.recipeItems.get(i).test(item)) {
                     itemList.get(o).shrink(1);
@@ -55,14 +54,14 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess pRegistryAccess) {
         List<ItemStack> itemList = Lists.newArrayList();
-        for (int o = 0; o < 12; o ++)
+        for (int o = 0; o < 12; o++)
             itemList.add(container.getItem(o));
 
-        for (int i = 0; i < recipeItems.size(); i ++) {
+        for (int i = 0; i < recipeItems.size(); i++) {
             boolean pass = false;
-            for (int o = 0; o < 12; o ++) {
+            for (int o = 0; o < 12; o++) {
                 var item = itemList.get(o);
                 if (this.recipeItems.get(i).test(item)) {
                     itemList.get(o).shrink(1);
@@ -82,8 +81,12 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.output;
+    }
+
+    public ItemStack getOutput() {
+        return output;
     }
 
     @Override
@@ -111,7 +114,9 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
     }
 
     public static class Type implements RecipeType<RecipeShaker> {
-        private Type() {}
+        private Type() {
+        }
+
         public static final Type INSTANCE = new Type();
     }
 
@@ -137,7 +142,6 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(it -> Ingredient.fromNetwork(buf));
             ItemStack output = buf.readItem();
-
             return new RecipeShaker(id, output, inputs, 8);
         }
 
@@ -145,29 +149,8 @@ public class RecipeShaker implements Recipe<SimpleContainer> {
         public void toNetwork(FriendlyByteBuf buf, RecipeShaker recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) ing.toNetwork(buf);
-
-            buf.writeItemStack(recipe.getResultItem(), false);
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return Serializer.INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return Serializer.ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass();
-        }
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass() {
-            return (Class<G>) RecipeSerializer.class;
+            buf.writeItemStack(recipe.getOutput(), false);
+            // TODO: getResultItem -> getOutput, needs check
         }
     }
 }

@@ -1,6 +1,6 @@
 package club.someoneice.vine.common.block.barrel;
 
-import club.someoneice.vine.common.gui.ContainerBarrel;
+import club.someoneice.vine.common.container.ContainerBarrel;
 import club.someoneice.vine.common.item.Wine;
 import club.someoneice.vine.core.Data;
 import club.someoneice.vine.core.TagHelper;
@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -26,8 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +40,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
     public boolean hasWater, hasWine, isFinish;
     private int progress;
     private int time;
+
     public BrewingBarrelEntity(BlockPos pos, BlockState state) {
         super(TileInit.BrewingBarrel.get(), pos, state);
         this.hasWater = false;
@@ -76,11 +76,11 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
     public void load(CompoundTag tag) {
         super.load(tag);
 
-        hasWater    = tag.getBoolean("hasWater");
-        hasWine     = tag.getBoolean("hasWine");
-        isFinish    = tag.getBoolean("isFinish");
-        progress    = tag.getInt("progress");
-        time        = tag.getInt("time");
+        hasWater = tag.getBoolean("hasWater");
+        hasWine = tag.getBoolean("hasWine");
+        isFinish = tag.getBoolean("isFinish");
+        progress = tag.getInt("progress");
+        time = tag.getInt("time");
         itemList.fromTag((ListTag) tag.get("contents"));
     }
 
@@ -91,7 +91,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         tag.putBoolean("isFinish", isFinish);
         tag.putInt("progress", progress);
         tag.putInt("time", time);
-        tag.put("contents",itemList.createTag());
+        tag.put("contents", itemList.createTag());
 
         super.saveAdditional(tag);
     }
@@ -104,20 +104,20 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         tag.putBoolean("isFinish", isFinish);
         tag.putInt("progress", progress);
         tag.putInt("time", time);
-        tag.put("contents",itemList.createTag());
+        tag.put("contents", itemList.createTag());
 
         return tag;
     }
 
-    public ListTag createItemListTag(){
+    public ListTag createItemListTag() {
         return itemList.createTag();
     }
 
-    public boolean isItemListEmpty(){
+    public boolean isItemListEmpty() {
         return itemList.isEmpty();
     }
 
-    public void loadItemListFromTag(ListTag tag){
+    public void loadItemListFromTag(ListTag tag) {
         itemList.fromTag(tag);
     }
 
@@ -130,7 +130,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return handler.cast();
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return handler.cast();
         return super.getCapability(cap, side);
     }
 
@@ -158,7 +158,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         final ItemStack finalWine = new ItemStack(wine.wineBottle.get(), 8);
         final ItemStack finalItem = item.copy();
         finalItem.setCount(16);
-        this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+        this.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
             it.insertItem(0, finalItem, false);
             it.insertItem(1, finalWine, false);
         });
@@ -170,9 +170,9 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
 
     public static void tick(Level world, BlockPos pos, BlockState state, BrewingBarrelEntity entity) {
         if (entity.hasWater && entity.hasWine && !entity.isFinish) {
-            entity.time ++;
+            entity.time++;
             if (entity.time >= 20 * 30) {
-                entity.progress ++;
+                entity.progress++;
                 entity.time = 0;
             }
 
@@ -180,7 +180,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         }
 
         if (entity.isFinish) {
-            entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                 it.getStackInSlot(0).setCount(0);
             });
         }
@@ -188,12 +188,12 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block.tksrwine.brewing_barrel");
+        return Component.translatable("block.tksrwine.brewing_barrel");
     }
 
     @Override
     public int[] getSlotsForFace(Direction p_19238_) {
-        return new int[] {0, 1};
+        return new int[]{0, 1};
     }
 
     @Override

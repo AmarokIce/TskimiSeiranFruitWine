@@ -1,15 +1,15 @@
 package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.common.RecipeShaker;
-import club.someoneice.vine.common.gui.ContainerShaker;
+import club.someoneice.vine.common.container.ContainerShaker;
 import club.someoneice.vine.core.Data;
-import club.someoneice.vine.core.TskimiSeiranVine;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.PotionInit;
+import club.someoneice.vine.util.Utilities;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,10 +21,10 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +35,7 @@ import java.util.Optional;
 
 public class ShakerItem extends Item {
     public ShakerItem() {
-        super(new Properties().tab(TskimiSeiranVine.TAB).stacksTo(1));
+        super(new Properties().stacksTo(1));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ShakerItem extends Item {
         if (player.isShiftKeyDown()) {
             if (!world.isClientSide) {
                 checkRecipes(item, world);
-                NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider((id, inv, user) -> new ContainerShaker(id, inv), new TextComponent("")));
+                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, user) -> new ContainerShaker(id, inv), Component.empty()));
             }
             return InteractionResultHolder.sidedSuccess(item, world.isClientSide);
         }
@@ -65,11 +65,14 @@ public class ShakerItem extends Item {
 
         if (context.getLevel().getBlockState(context.getClickedPos()).is(BlockInit.GobletBlock.get())) {
             checkRecipes(context.getItemInHand(), context.getLevel());
-            context.getItemInHand().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
+            context.getItemInHand().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
                 if (!it.getStackInSlot(12).isEmpty()) {
-                    context.getPlayer().addItem(it.getStackInSlot(12).copy());
+                    final Player player = context.getPlayer();
+                    if (player == null) return;
+                    Utilities.addItem2PlayerOrDrop(player, it.getStackInSlot(12).copy());
                     it.getStackInSlot(12).setCount(0);
-                } else context.getLevel().setBlock(context.getClickedPos(), BlockInit.NoneCocktail.get().defaultBlockState(), 3);
+                } else
+                    context.getLevel().setBlock(context.getClickedPos(), BlockInit.NoneCocktail.get().defaultBlockState(), 3);
                 removeItem(context.getItemInHand());
             });
         }
@@ -83,8 +86,8 @@ public class ShakerItem extends Item {
         var tag = item.getOrCreateTag();
 
         SimpleContainer container = new SimpleContainer(8);
-        item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
-            for (int i = 0; i < 12; i ++) {
+        item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
+            for (int i = 0; i < 12; i++) {
                 var itm = it.getStackInSlot(i).copy();
                 if (itm.getItem() instanceof Wine.WineItem wine)
                     container.addItem(Data.wineMap.get(wine.name).bottle.get().getDefaultInstance());
@@ -101,14 +104,14 @@ public class ShakerItem extends Item {
             }
             match.ifPresent(recipe -> {
                 if (tag.getInt("shake_count") > recipe.getShaking())
-                    it.insertItem(12, recipe.getResultItem(), false);
+                    it.insertItem(12, recipe.getResultItem(world.registryAccess()), false);
             });
         });
     }
 
     private void removeItem(ItemStack item) {
-        item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> {
-            for (int i = 0; i < 12; i ++) {
+        item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
+            for (int i = 0; i < 12; i++) {
                 var itm = it.getStackInSlot(i);
                 if (itm.getItem() instanceof Wine.WineItem wine) {
                     if (wine.wineEnum.equals(Wine.WineEnum.BUCKET) || wine.wineEnum.equals(Wine.WineEnum.WINE)) {
@@ -127,8 +130,8 @@ public class ShakerItem extends Item {
                     }
                 } else {
                     it.getStackInSlot(i).shrink(1);
-                    if (itm.hasContainerItem()) {
-                        it.insertItem(i, itm.getContainerItem(), false);
+                    if (itm.hasCraftingRemainingItem()) {
+                        it.insertItem(i, itm.getCraftingRemainingItem(), false);
                     }
                 }
             }
@@ -144,7 +147,7 @@ public class ShakerItem extends Item {
     @Override
     public CompoundTag getShareTag(ItemStack item) {
         var result = Objects.requireNonNullElse(super.getShareTag(item), new CompoundTag());
-        item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> result.put("items", ((ItemStackHandler) it).serializeNBT()));
+        item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> result.put("items", ((ItemStackHandler) it).serializeNBT()));
         return result;
     }
 
@@ -152,7 +155,7 @@ public class ShakerItem extends Item {
     public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
         super.readShareTag(stack, nbt);
         if (nbt != null)
-            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(it -> ((ItemStackHandler) it).deserializeNBT(nbt.getCompound("items")));
+            stack.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> ((ItemStackHandler) it).deserializeNBT(nbt.getCompound("items")));
     }
 
     public static class CapabilityHandle implements ICapabilitySerializable<CompoundTag> {
@@ -175,12 +178,12 @@ public class ShakerItem extends Item {
         @NotNull
         @Override
         public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @org.jetbrains.annotations.Nullable Direction side) {
-            return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? handler.cast() : LazyOptional.empty();
+            return cap == ForgeCapabilities.ITEM_HANDLER ? handler.cast() : LazyOptional.empty();
         }
 
         @Override
         public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-            return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? handler.cast() : LazyOptional.empty();
+            return cap == ForgeCapabilities.ITEM_HANDLER ? handler.cast() : LazyOptional.empty();
         }
 
         private ItemStackHandler getItemHandler() {
