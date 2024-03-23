@@ -64,7 +64,6 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
                     BrewingBarrelEntity.this.progress = value;
             }
 
-            // 資訊數量
             @Override
             public int getCount() {
                 return 1;
@@ -99,13 +98,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
     @Override
     public CompoundTag getUpdateTag() {
         var tag = new CompoundTag();
-        tag.putBoolean("hasWater", hasWater);
-        tag.putBoolean("hasWine", hasWine);
-        tag.putBoolean("isFinish", isFinish);
-        tag.putInt("progress", progress);
-        tag.putInt("time", time);
-        tag.put("contents", itemList.createTag());
-
+        saveAdditional(tag);
         return tag;
     }
 
@@ -142,19 +135,28 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         return this.progress;
     }
 
-    public boolean setWine(ItemStack item) {
-        if (!item.is(Items.MILK_BUCKET) && item.getCount() < 16) return false;
-        Wine wine = null;
+
+    public boolean setWine(Player player, ItemStack item) {
+        if (!item.is(Items.MILK_BUCKET) && item.getCount() < 16) {
+            if (!player.level().isClientSide) return false;
+            player.displayClientMessage(Component.translatable("tsfWine.notEnough.message"), true);
+            return false;
+        }
+
+        Wine wine;
         if (Data.wineItemMap.containsKey(item.getItem())) wine = Data.wineItemMap.get(item.getItem());
         else {
-            for (var i : Data.wineTagList.keySet()) {
-                if (item.is(i)) wine = Data.wineTagList.get(i);
+            var flag = Data.wineTagList.keySet().stream().filter(item::is).findFirst();
+            if (!flag.isPresent()) {
+                if (!player.level().isClientSide) return false;
+                player.displayClientMessage(Component.translatable("tsfWine.cannotPut.message"), true);
+                return false;
             }
-
-            if (wine == null) return false;
+            wine = Data.wineTagList.get(flag.get());
         }
 
         if (item.is(Items.MILK_BUCKET) || item.is(TagHelper.Milk)) this.setWater();
+
         final ItemStack finalWine = new ItemStack(wine.wineBottle.get(), 8);
         final ItemStack finalItem = item.copy();
         finalItem.setCount(16);
@@ -168,21 +170,18 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         return true;
     }
 
+    @SuppressWarnings("unused")
     public static void tick(Level world, BlockPos pos, BlockState state, BrewingBarrelEntity entity) {
-        if (entity.hasWater && entity.hasWine && !entity.isFinish) {
-            entity.time++;
-            if (entity.time >= 20 * 30) {
-                entity.progress++;
-                entity.time = 0;
-            }
-
-            if (entity.progress >= 100) entity.isFinish = true;
+        if (!entity.hasWater || entity.hasWine || entity.isFinish) return;
+        if (++entity.time >= 20) {
+            entity.progress++;
+            entity.time = 0;
+            return;
         }
 
-        if (entity.isFinish) {
-            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
-                it.getStackInSlot(0).setCount(0);
-            });
+        if (entity.progress >= 100) {
+            entity.isFinish = true;
+            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> it.getStackInSlot(0).setCount(0));
         }
     }
 
@@ -243,11 +242,8 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
 
     @Override
     public boolean stillValid(Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
-            return false;
-        } else {
-            return player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64.0D;
-        }
+        return player.level().getBlockEntity(this.worldPosition) == this
+                && player.distanceToSqr(this.worldPosition.getCenter()) <= 64.0D;
     }
 
     @Override

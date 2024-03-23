@@ -1,6 +1,8 @@
 package club.someoneice.vine.common.item.group;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.*;
@@ -11,10 +13,10 @@ public enum CreativeModeTabDef {
     WINE_TAB,
     COCKTAIL_TAB;
 
-    private static Map<CreativeModeTabDef, Set<Supplier<ItemStack>>> itemsInTab = new HashMap<>();
+    private static Map<CreativeModeTabDef, Set<Supplier<ItemStack>>> itemsInTab = Maps.newHashMap();
 
     public void addIntoTab(Supplier<ItemStack> stack) {
-        if (!itemsInTab.containsKey(this)) itemsInTab.put(this, new HashSet<>());
+        if (!itemsInTab.containsKey(this)) itemsInTab.put(this, Sets.newHashSet());
         itemsInTab.get(this).add(stack);
     }
 

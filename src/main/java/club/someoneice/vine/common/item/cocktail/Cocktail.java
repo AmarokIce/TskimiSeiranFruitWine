@@ -32,7 +32,6 @@ import java.util.List;
 
 public class Cocktail {
     public static class CocktailBlock extends Block {
-        String name;
         int hunger;
 
         public CocktailBlock(int hunger) {

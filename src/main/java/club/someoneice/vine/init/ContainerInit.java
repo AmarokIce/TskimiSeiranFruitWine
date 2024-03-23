@@ -16,5 +16,4 @@ public class ContainerInit {
     public static final RegistryObject<MenuType<ContainerBarrel>> BARREL_GUI = CONTAINERS.register("barrel_gui", () -> IForgeMenuType.create(ContainerBarrel::new));
     public static final RegistryObject<MenuType<ContainerBoilers>> BOILER_GUI = CONTAINERS.register("boiler_gui", () -> IForgeMenuType.create(ContainerBoilers::new));
     public static final RegistryObject<MenuType<ContainerShaker>> SHAKER_GUI = CONTAINERS.register("shaker_gui", () -> IForgeMenuType.create(ContainerShaker::new));
-
 }

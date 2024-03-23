@@ -18,7 +18,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Wine {
-    public RegistryObject<Item> bucket;
     public RegistryObject<Item> bottle;
     public RegistryObject<Item> cup;
     public RegistryObject<Item> glass;
@@ -27,9 +26,6 @@ public class Wine {
 
     public Wine(String name, int hunger) {
         this.name = "tsfWine." + name;
-
-        bucket = ItemInit.registerWithTab(name + "_bucket",
-                () -> new WineItem(WineEnum.BUCKET, name, WineItem.propertiesHelper(hunger), Items.BUCKET), CreativeModeTabDef.WINE_TAB);
         wineBottle = ItemInit.registerWithTab(name + "_wine",
                 () -> new WineItem(WineEnum.WINE, name, WineItem.propertiesHelper(hunger), ItemInit.WineBottle.get()), CreativeModeTabDef.WINE_TAB);
         bottle = ItemInit.registerWithTab(name + "_bottle",
@@ -42,12 +38,20 @@ public class Wine {
         Data.wineMap.put("tsfWine." + name, this);
     }
 
+    public ItemStack getItemByContainerOnUse(ItemStack item) {
+        if (item.is(ItemInit.WineBottle.get()))     return this.wineBottle.get().getDefaultInstance();
+        if (item.is(ItemInit.Cup.get()))            return this.cup.get().getDefaultInstance();
+        if (item.is(ItemInit.GlassBottle.get()))    return this.bottle.get().getDefaultInstance();
+        if (item.is(Items.GLASS_BOTTLE))            return this.glass.get().getDefaultInstance();
+
+        return null;
+    }
+
     public static Wine getWineByItem(WineItem item) {
         return Data.wineMap.get(item.name);
     }
 
     public enum WineEnum {
-        BUCKET,
         BOTTLE,
         CUP,
         GLASS,
@@ -59,6 +63,10 @@ public class Wine {
         public Item returnItem;
         public String name;
         public WineEnum wineEnum;
+
+        public Wine getWineType() {
+            return Wine.this;
+        }
 
         public WineItem(WineEnum wine, String name, Properties properties, Item returnItem) {
             super(properties.craftRemainder(returnItem));
@@ -98,7 +106,7 @@ public class Wine {
 
         @Override
         public int getBarWidth(ItemStack itemStack) {
-            if ((((WineItem) itemStack.getItem()).wineEnum == WineEnum.BUCKET || ((WineItem) itemStack.getItem()).wineEnum == WineEnum.WINE) && itemStack.getOrCreateTag().contains("wine"))
+            if ((((WineItem) itemStack.getItem()).wineEnum == WineEnum.WINE) && itemStack.getOrCreateTag().contains("wine"))
                 return Math.round(13.0F - (float) (4 - itemStack.getOrCreateTag().getInt("wine")) * 13 / 4.0F);
             else return -1;
         }
@@ -118,7 +126,7 @@ public class Wine {
         @Override
         public void appendHoverText(ItemStack item, @Nullable Level world, List<Component> list, TooltipFlag flag) {
             var tag = item.getOrCreateTag();
-            if (this.wineEnum == WineEnum.WINE || this.wineEnum == WineEnum.BUCKET)
+            if (this.wineEnum == WineEnum.WINE)
                 if (tag.contains("wine"))
                     list.add(Component.translatable("tsfWine.wine_num.message").append(Integer.toString(tag.getInt("wine"))));
         }

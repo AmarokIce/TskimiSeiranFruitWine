@@ -167,5 +167,9 @@
   "item.tksrwine.grape_glass": "葡萄酒",
 
   "item.tksrwine.tskimi_seiran_soup.effect.tsks": "月兰的神秘特调",
-  "message.rebbitsoup.potion": "一瓶色泽上有点怪异的紫色流质 \n尝一口，一股蜜桃的香甜与伏特加的刺激以及烧兔肉的香味齐聚在瓶内，嗯...尝起来还挺不错的... \n有低可能性会有少量月兰的洗澡水混在里面。"
+  "message.rebbitsoup.potion": "一瓶色泽上有点怪异的紫色流质 \n尝一口，一股蜜桃的香甜与伏特加的刺激以及烧兔肉的香味齐聚在瓶内，嗯...尝起来还挺不错的... \n有低可能性会有少量月兰的洗澡水混在里面。",
+
+  "tsfWine.shouldWater.message": "看起来还需要加入水...",
+  "tsfWine.notEnough.message": "这些材料不够多，貌似无法酿酒...",
+  "tsfWine.cannotPut.message": "这可没法酿酒阿..."
 }

@@ -54,34 +54,21 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
-                switch (index) {
-                    case 0 -> {
-                        return DistillationBoilerEntity.this.getWineProgress();
-                    }
-                    case 1 -> {
-                        if (DistillationBoilerEntity.this.flag) return 1;
-                        else return 0;
-                    }
-
-                    default -> {
-                        return -1;
-                    }
-                }
+                return switch (index) {
+                    case 0 -> DistillationBoilerEntity.this.getWineProgress();
+                    case 1 -> DistillationBoilerEntity.this.flag ? 1 : 0;
+                    default -> -1;
+                };
             }
 
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case 0 -> {
-                        DistillationBoilerEntity.this.progress = value;
-                    }
-                    case 1 -> {
-                        DistillationBoilerEntity.this.flag = value != 0;
-                    }
+                    case 0 -> DistillationBoilerEntity.this.progress = value;
+                    case 1 -> DistillationBoilerEntity.this.flag = value != 0;
                 }
             }
 
-            // 資訊數量
             @Override
             public int getCount() {
                 return 2;
@@ -159,32 +146,30 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
         return this.progress;
     }
 
-    public boolean setWine(ItemStack item) {
-        if ((!item.is(Items.MILK_BUCKET) && item.getCount() < 16) || this.hasWine) return false;
-        Wine wine = null;
-        if (this.flag) {
-            if (Data.distillationItemMap.containsKey(item.getItem()))
-                wine = Data.distillationItemMap.get(item.getItem());
-            else {
-                for (var i : Data.distillationTagList.keySet()) {
-                    if (item.is(i)) wine = Data.distillationTagList.get(i);
-                }
+    public boolean setWine(Player player, ItemStack item) {
+        if (!item.is(Items.MILK_BUCKET) && item.getCount() < 16) {
+            if (!player.level().isClientSide) return false;
+            player.displayClientMessage(Component.translatable("tsfWine.notEnough.message"), true);
+            return false;
+        }
+        var map = this.flag ? Data.distillationItemMap : Data.wineItemMap;
+        var mapTag = this.flag ? Data.distillationTagList : Data.wineTagList;
 
-                if (wine == null) return false;
+        Wine wine;
+        if (map.containsKey(item.getItem())) wine = Data.wineItemMap.get(item.getItem());
+        else {
+            var flag = mapTag.keySet().stream().filter(item::is).findFirst();
+            if (flag.isEmpty()) {
+                if (!player.level().isClientSide) return false;
+                player.displayClientMessage(Component.translatable("tsfWine.cannotPut.message"), true);
+                return false;
             }
-        } else {
-            if (Data.wineItemMap.containsKey(item.getItem())) wine = Data.wineItemMap.get(item.getItem());
-            else {
-                for (var i : Data.wineTagList.keySet()) {
-                    if (item.is(i)) wine = Data.wineTagList.get(i);
-                }
-
-                if (wine == null) return false;
-            }
+            wine = Data.wineTagList.get(flag.get());
         }
 
         if (item.is(Items.MILK_BUCKET) || item.is(TagHelper.Milk)) this.setWater();
-        ItemStack finalWine = new ItemStack(wine.wineBottle.get(), 8);
+
+        final ItemStack finalWine = new ItemStack(wine.wineBottle.get(), 8);
         final ItemStack finalItem = item.copy();
         finalItem.setCount(16);
         this.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
@@ -207,20 +192,16 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
                 || bs.is(Blocks.CAMPFIRE)
                 || bs.is(Blocks.SOUL_CAMPFIRE);
 
-        if (entity.hasWater && entity.hasWine && !entity.isFinish) {
-            entity.time++;
-            if (entity.time >= 20 * 30) {
-                entity.progress += 1;
-                entity.time = 0;
-            }
-
-            if (entity.progress >= 100) entity.isFinish = true;
+        if (!entity.hasWater || entity.hasWine || entity.isFinish) return;
+        if (++entity.time >= 20) {
+            entity.progress++;
+            entity.time = 0;
+            return;
         }
 
-        if (entity.isFinish) {
-            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
-                it.getStackInSlot(0).setCount(0);
-            });
+        if (entity.progress >= 100) {
+            entity.isFinish = true;
+            entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> it.getStackInSlot(0).setCount(0));
         }
     }
 
@@ -281,11 +262,8 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
 
     @Override
     public boolean stillValid(Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
-            return false;
-        } else {
-            return player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64.0D;
-        }
+        return player.level().getBlockEntity(this.worldPosition) == this
+                && player.distanceToSqr(this.worldPosition.getCenter()) <= 64.0D;
     }
 
     @Override

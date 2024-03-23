@@ -17,5 +17,4 @@ public class BlockInit {
     public static final RegistryObject<Block> DistillationBoilerBlock = BLOCKS.register("distillation_boiler", DistillationBoiler::new);
     public static final RegistryObject<Block> GobletBlock = BLOCKS.register("goblet", Goblet::new);
     public static final RegistryObject<Block> NoneCocktail = BLOCKS.register("none_cocktail", () -> new Cocktail.CocktailBlock(7));
-
 }

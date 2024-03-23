@@ -22,8 +22,6 @@ public class TskimiSeiranVine {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static final boolean isCroptopiaInstalled = ModList.get().isLoaded("croptopia");
 
-
-
     public TskimiSeiranVine() {
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         PotionInit.POTIONS.register(bus);
@@ -48,6 +46,4 @@ public class TskimiSeiranVine {
         MenuScreens.register(ContainerInit.BOILER_GUI.get(), GuiBoiler::new);
         MenuScreens.register(ContainerInit.SHAKER_GUI.get(), GuiShaker::new);
     }
-
-
 }
