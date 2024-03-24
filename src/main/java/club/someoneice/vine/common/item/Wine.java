@@ -1,7 +1,6 @@
 package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.common.item.group.CreativeModeTabDef;
-import club.someoneice.vine.core.Data;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.util.Utilities;
 import net.minecraft.network.chat.Component;
@@ -34,8 +33,6 @@ public class Wine {
                 () -> new WineItem(WineEnum.GLASS, name, WineItem.propertiesHelper(hunger), ItemInit.GlassBottle.get()), CreativeModeTabDef.WINE_TAB);
         cup = ItemInit.registerWithTab(name + "_cup",
                 () -> new WineItem(WineEnum.CUP, name, WineItem.propertiesHelper(hunger), ItemInit.Cup.get()), CreativeModeTabDef.WINE_TAB);
-
-        Data.wineMap.put("tsfWine." + name, this);
     }
 
     public ItemStack getItemByContainerOnUse(ItemStack item) {
@@ -45,10 +42,6 @@ public class Wine {
         if (item.is(Items.GLASS_BOTTLE))            return this.glass.get().getDefaultInstance();
 
         return null;
-    }
-
-    public static Wine getWineByItem(WineItem item) {
-        return Data.wineMap.get(item.name);
     }
 
     public enum WineEnum {
@@ -90,15 +83,18 @@ public class Wine {
             if (!world.isClientSide && entity instanceof Player player) {
                 world.gameEvent(player, GameEvent.EAT, player.getEyePosition());
                 world.playSound(player, player.getX(), player.getY(), player.getZ(), this.getDrinkingSound(), SoundSource.NEUTRAL, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
-                player.getFoodData().eat(item.getItem().getFoodProperties().getNutrition(), item.getItem().getFoodProperties().getSaturationModifier());
+
+                final FoodProperties properties = item.getItem().getFoodProperties(item, player);
+                assert properties != null;
+
+                player.getFoodData().eat(properties.getNutrition(), properties.getSaturationModifier());
                 var nbt = item.getOrCreateTag();
                 if (!nbt.contains("wine")) nbt.putInt("wine", 4);
                 if (!player.isCreative()) nbt.putInt("wine", Math.max(nbt.getInt("wine") - 1, 0));
-                if (nbt.getInt("wine") == 0) {
-                    item.shrink(1);
-                    nbt.putInt("wine", 4);
-                    Utilities.addItem2PlayerOrDrop(player, new ItemStack(this.returnItem));
-                }
+                if (nbt.getInt("wine") != 0) return item;
+                item.shrink(1);
+                nbt.putInt("wine", 4);
+                Utilities.addItem2PlayerOrDrop(player, new ItemStack(this.returnItem));
             }
 
             return item;

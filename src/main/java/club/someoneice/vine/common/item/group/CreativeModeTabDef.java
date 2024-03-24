@@ -5,7 +5,10 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public enum CreativeModeTabDef {

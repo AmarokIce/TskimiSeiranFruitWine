@@ -50,7 +50,6 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
         this.time = 0;
 
         this.data = new ContainerData() {
-
             @Override
             public int get(int index) {
                 if (index == 0)
@@ -172,7 +171,7 @@ public class BrewingBarrelEntity extends BlockEntity implements MenuProvider, Wo
 
     @SuppressWarnings("unused")
     public static void tick(Level world, BlockPos pos, BlockState state, BrewingBarrelEntity entity) {
-        if (!entity.hasWater || entity.hasWine || entity.isFinish) return;
+        if (!entity.hasWater || !entity.hasWine || entity.isFinish) return;
         if (++entity.time >= 20) {
             entity.progress++;
             entity.time = 0;

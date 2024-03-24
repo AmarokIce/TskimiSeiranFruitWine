@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = '1.7'
+version = '1.8'
 group = 'club.someoneice.vine'
 archivesBaseName = "TSKimiSeiranFruitWine-Forge-${project.minecraft_version}"
 

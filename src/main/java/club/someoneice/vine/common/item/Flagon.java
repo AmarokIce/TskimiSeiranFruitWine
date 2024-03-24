@@ -49,21 +49,27 @@ public class Flagon extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
+        final ItemStack itemstack = player.getItemInHand(hand);
         if (world.isClientSide) return InteractionResultHolder.success(itemstack);
         var ahand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         var nbt = itemstack.getOrCreateTag();
+
+        final ItemStack item = player.getItemInHand(ahand);
         if (nbt.getInt("wine") > 0 && !player.isShiftKeyDown()) {
             player.startUsingItem(hand);
-        } else if (player.getItemInHand(ahand).getItem() instanceof Wine.WineItem wine && isSameWine(itemstack, wine)) {
-            nbt.putInt("hunger", wine.getFoodProperties().getNutrition());
-            nbt.putFloat("saturation", (float) (((wine.getFoodProperties().getNutrition()) - 2) / 10));
-            nbt.putInt("wine", Math.min(nbt.getInt("wine") + 1, 4));
-
-            world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.NEUTRAL, 1.0F, 1.0F);
-            player.getItemInHand(ahand).shrink(1);
-            Utilities.addItem2PlayerOrDrop(player, new ItemStack(wine.returnItem));
+            return InteractionResultHolder.success(itemstack);
         }
+
+        if (!(item.getItem() instanceof Wine.WineItem wine) || !isSameWine(itemstack, wine)) return InteractionResultHolder.success(itemstack);
+        final var foodProperties = wine.getFoodProperties(item, player);
+        assert foodProperties != null;
+        nbt.putInt("hunger", foodProperties.getNutrition());
+        nbt.putFloat("saturation", (float) (((foodProperties.getNutrition()) - 2) / 10));
+        nbt.putInt("wine", Math.min(nbt.getInt("wine") + 1, 4));
+
+        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL_DRAGONBREATH, SoundSource.NEUTRAL, 1.0F, 1.0F);
+        player.getItemInHand(ahand).shrink(1);
+        Utilities.addItem2PlayerOrDrop(player, new ItemStack(wine.returnItem));
 
         return InteractionResultHolder.success(itemstack);
     }

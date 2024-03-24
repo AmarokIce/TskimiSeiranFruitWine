@@ -64,22 +64,26 @@ public class DistillationBoiler extends BaseEntityBlock {
         if (!(world.getBlockEntity(pos) instanceof DistillationBoilerEntity entity)) return InteractionResult.FAIL;
         if (player.isShiftKeyDown() && !world.isClientSide) NetworkHooks.openScreen(((ServerPlayer) player), entity, pos);
 
+        var item = player.getMainHandItem();
+        if (!entity.hasWater) {
+            handleWater(player, entity);
+            return InteractionResult.SUCCESS;
+        }
+        if (!entity.hasWine && entity.setWine(player, item)) return InteractionResult.SUCCESS;
         if (entity.isFinish) {
             entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> handleWine(player, entity, it));
             return InteractionResult.SUCCESS;
         }
-
-        var item = player.getMainHandItem();
-        if (!entity.hasWater) handleWater(player, entity);
-        if (!entity.hasWine && entity.setWine(player, item)) return InteractionResult.SUCCESS;
         return InteractionResult.FAIL;
     }
 
     private void handleWater(final Player player, final DistillationBoilerEntity entity) {
         final var item = player.getMainHandItem();
         final var world = player.level();
-        if (!item.is(Items.WATER_BUCKET) && player.level().isClientSide) player.displayClientMessage(Component.translatable("tsfWine.shouldWater.message"), true);
-        if (world.isClientSide) return;
+        if (!item.is(Items.WATER_BUCKET)) {
+            if (player.level().isClientSide) player.displayClientMessage(Component.translatable("tsfWine.shouldWater.message"), true);
+            return;
+        }
         entity.setWater();
         world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
         item.shrink(1);
@@ -91,14 +95,14 @@ public class DistillationBoiler extends BaseEntityBlock {
         final var wine = ((Wine.WineItem) it.getStackInSlot(1).getItem()).getWineType();
         final var wineItem = wine.getItemByContainerOnUse(item);
         if (wineItem == null) return;
-        int flag =  ((Wine.WineItem) wineItem.getItem()).wineEnum == Wine.WineEnum.BOTTLE ? 4 : 1;
+        int flag =  ((Wine.WineItem) wineItem.getItem()).wineEnum == Wine.WineEnum.WINE ? 4 : 1;
         if (it.getStackInSlot(1).getCount() < flag) return;
 
         Utilities.addItem2PlayerOrDrop(player, wineItem);
-        if (it.getStackInSlot(1) == ItemStack.EMPTY) entity.init();
         item.shrink(1);
 
         it.extractItem(1, flag, false);
+        if (it.getStackInSlot(1) == ItemStack.EMPTY) entity.init();
     }
 
     @Nullable

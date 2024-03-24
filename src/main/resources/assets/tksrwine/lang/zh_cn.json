@@ -171,5 +171,8 @@
 
   "tsfWine.shouldWater.message": "看起来还需要加入水...",
   "tsfWine.notEnough.message": "这些材料不够多，貌似无法酿酒...",
-  "tsfWine.cannotPut.message": "这可没法酿酒阿..."
+  "tsfWine.cannotPut.message": "这可没法酿酒阿...",
+
+  "tsfwine.brewing": "酿造",
+  "tsfwine.distillation": "蒸馏"
 }

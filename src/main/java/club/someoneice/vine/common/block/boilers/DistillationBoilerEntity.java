@@ -41,7 +41,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
     public boolean hasWater, hasWine, isFinish;
     private int progress;
     private int time;
-    private boolean flag;
+    private boolean hotFlag;
 
     public DistillationBoilerEntity(BlockPos pos, BlockState state) {
         super(TileInit.DistillationBoiler.get(), pos, state);
@@ -56,7 +56,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
             public int get(int index) {
                 return switch (index) {
                     case 0 -> DistillationBoilerEntity.this.getWineProgress();
-                    case 1 -> DistillationBoilerEntity.this.flag ? 1 : 0;
+                    case 1 -> DistillationBoilerEntity.this.hotFlag ? 1 : 0;
                     default -> -1;
                 };
             }
@@ -65,7 +65,7 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
             public void set(int index, int value) {
                 switch (index) {
                     case 0 -> DistillationBoilerEntity.this.progress = value;
-                    case 1 -> DistillationBoilerEntity.this.flag = value != 0;
+                    case 1 -> DistillationBoilerEntity.this.hotFlag = value != 0;
                 }
             }
 
@@ -152,19 +152,30 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
             player.displayClientMessage(Component.translatable("tsfWine.notEnough.message"), true);
             return false;
         }
-        var map = this.flag ? Data.distillationItemMap : Data.wineItemMap;
-        var mapTag = this.flag ? Data.distillationTagList : Data.wineTagList;
+
+        final var bs = this.getLevel().getBlockState(this.getBlockPos().below());
+        final var flag = bs.is(Blocks.FIRE)
+                || bs.is(Blocks.SOUL_FIRE)
+                || bs.is(Blocks.LAVA)
+                || bs.is(Blocks.LAVA_CAULDRON)
+                || bs.is(Blocks.MAGMA_BLOCK)
+                || bs.is(Blocks.CAMPFIRE)
+                || bs.is(Blocks.SOUL_CAMPFIRE);
+
+        this.hotFlag = flag;
+        var map = flag ? Data.distillationItemMap : Data.wineItemMap;
+        var mapTag = flag ? Data.distillationTagList : Data.wineTagList;
 
         Wine wine;
         if (map.containsKey(item.getItem())) wine = Data.wineItemMap.get(item.getItem());
         else {
-            var flag = mapTag.keySet().stream().filter(item::is).findFirst();
-            if (flag.isEmpty()) {
+            var pFlag = mapTag.keySet().stream().filter(item::is).findFirst();
+            if (pFlag.isEmpty()) {
                 if (!player.level().isClientSide) return false;
                 player.displayClientMessage(Component.translatable("tsfWine.cannotPut.message"), true);
                 return false;
             }
-            wine = Data.wineTagList.get(flag.get());
+            wine = Data.wineTagList.get(pFlag.get());
         }
 
         if (item.is(Items.MILK_BUCKET) || item.is(TagHelper.Milk)) this.setWater();
@@ -183,8 +194,9 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
     }
 
     public static void tick(Level world, BlockPos pos, BlockState state, DistillationBoilerEntity entity) {
-        var bs = world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()));
-        entity.flag = bs.is(Blocks.FIRE)
+        if (!entity.hasWater || !entity.hasWine || entity.isFinish) return;
+        var bs = world.getBlockState(pos.below());
+        var flag = bs.is(Blocks.FIRE)
                 || bs.is(Blocks.SOUL_FIRE)
                 || bs.is(Blocks.LAVA)
                 || bs.is(Blocks.LAVA_CAULDRON)
@@ -192,7 +204,8 @@ public class DistillationBoilerEntity extends BlockEntity implements MenuProvide
                 || bs.is(Blocks.CAMPFIRE)
                 || bs.is(Blocks.SOUL_CAMPFIRE);
 
-        if (!entity.hasWater || entity.hasWine || entity.isFinish) return;
+        if (entity.hotFlag != flag) return;
+
         if (++entity.time >= 20) {
             entity.progress++;
             entity.time = 0;

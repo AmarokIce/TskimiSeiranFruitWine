@@ -2,7 +2,6 @@ package club.someoneice.vine.common.item;
 
 import club.someoneice.vine.common.RecipeShaker;
 import club.someoneice.vine.common.container.ContainerShaker;
-import club.someoneice.vine.core.Data;
 import club.someoneice.vine.init.BlockInit;
 import club.someoneice.vine.init.ItemInit;
 import club.someoneice.vine.init.PotionInit;
@@ -44,11 +43,12 @@ public class ShakerItem extends Item {
         var item = player.getItemInHand(hand);
         var tag = item.getOrCreateTag();
         if (player.isShiftKeyDown()) {
-            if (!world.isClientSide) {
-                checkRecipes(item, world);
-                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, user) -> new ContainerShaker(id, inv), Component.empty()));
-            }
-            return InteractionResultHolder.sidedSuccess(item, world.isClientSide);
+            if (world.isClientSide) return InteractionResultHolder.sidedSuccess(item, true);
+
+            checkRecipes(item, world);
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, user) -> new ContainerShaker(id, inv), Component.empty()));
+
+            return InteractionResultHolder.sidedSuccess(item, false);
         }
 
         world.playSound(null, player, SoundEvents.HONEY_DRINK, SoundSource.PLAYERS, 1.0F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
@@ -63,19 +63,23 @@ public class ShakerItem extends Item {
         super.useOn(context);
         if (context.getLevel().isClientSide) return InteractionResult.SUCCESS;
 
-        if (context.getLevel().getBlockState(context.getClickedPos()).is(BlockInit.GobletBlock.get())) {
-            checkRecipes(context.getItemInHand(), context.getLevel());
-            context.getItemInHand().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
-                if (!it.getStackInSlot(12).isEmpty()) {
-                    final Player player = context.getPlayer();
-                    if (player == null) return;
-                    Utilities.addItem2PlayerOrDrop(player, it.getStackInSlot(12).copy());
-                    it.getStackInSlot(12).setCount(0);
-                } else
-                    context.getLevel().setBlock(context.getClickedPos(), BlockInit.NoneCocktail.get().defaultBlockState(), 3);
-                removeItem(context.getItemInHand());
-            });
+        if (!context.getLevel().getBlockState(context.getClickedPos()).is(BlockInit.GobletBlock.get())) {
+            context.getItemInHand().getOrCreateTag().putInt("shake_count", 0);
+
+            return InteractionResult.SUCCESS;
         }
+
+        checkRecipes(context.getItemInHand(), context.getLevel());
+        context.getItemInHand().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
+            if (!it.getStackInSlot(12).isEmpty()) {
+                final Player player = context.getPlayer();
+                if (player == null) return;
+                Utilities.addItem2PlayerOrDrop(player, it.getStackInSlot(12).copy());
+                it.getStackInSlot(12).setCount(0);
+            } else
+                context.getLevel().setBlock(context.getClickedPos(), BlockInit.NoneCocktail.get().defaultBlockState(), 3);
+            removeItem(context.getItemInHand());
+        });
 
         context.getItemInHand().getOrCreateTag().putInt("shake_count", 0);
 
@@ -90,14 +94,14 @@ public class ShakerItem extends Item {
             for (int i = 0; i < 12; i++) {
                 var itm = it.getStackInSlot(i).copy();
                 if (itm.getItem() instanceof Wine.WineItem wine)
-                    container.addItem(Data.wineMap.get(wine.name).bottle.get().getDefaultInstance());
+                    container.addItem(wine.getWineType().bottle.get().getDefaultInstance());
                 else if (itm.getItem() instanceof PotionSoup) {
                     container.addItem(PotionUtils.setPotion(new ItemStack(this), PotionInit.tsks_s_soup.get()));
                 } else container.addItem(itm);
             }
 
             Optional<RecipeShaker> match = world.getRecipeManager().getRecipeFor(RecipeShaker.Type.INSTANCE, container, world);
-            if (!match.isPresent()) {
+            if (match.isEmpty()) {
                 it.getStackInSlot(12).setCount(0);
                 it.insertItem(12, ItemStack.EMPTY, false);
                 return;
@@ -113,27 +117,26 @@ public class ShakerItem extends Item {
         item.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(it -> {
             for (int i = 0; i < 12; i++) {
                 var itm = it.getStackInSlot(i);
-                if (itm.getItem() instanceof Wine.WineItem wine) {
-                    if (wine.wineEnum.equals(Wine.WineEnum.BUCKET) || wine.wineEnum.equals(Wine.WineEnum.WINE)) {
-                        var wine_tag = itm.getOrCreateTag();
-                        if (wine_tag.contains("wine")) {
-                            wine_tag.putInt("wine", wine_tag.getInt("wine"));
-                        } else wine_tag.putInt("wine", 3);
-
-                        if (wine_tag.getInt("wine") < 1) {
-                            it.getStackInSlot(i).shrink(1);
-                            it.insertItem(i, wine.returnItem.getDefaultInstance(), false);
-                        }
-                    } else {
-                        it.getStackInSlot(i).shrink(1);
-                        it.insertItem(i, wine.returnItem.getDefaultInstance(), false);
-                    }
-                } else {
+                if (!(itm.getItem() instanceof Wine.WineItem wine)) {
                     it.getStackInSlot(i).shrink(1);
-                    if (itm.hasCraftingRemainingItem()) {
-                        it.insertItem(i, itm.getCraftingRemainingItem(), false);
-                    }
+                    if (itm.hasCraftingRemainingItem()) it.insertItem(i, itm.getCraftingRemainingItem(), false);
+                    return;
                 }
+
+                if (!wine.wineEnum.equals(Wine.WineEnum.WINE)) {
+                    it.getStackInSlot(i).shrink(1);
+                    it.insertItem(i, wine.returnItem.getDefaultInstance(), false);
+                    return;
+                }
+
+                var wine_tag = itm.getOrCreateTag();
+                if (wine_tag.contains("wine")) wine_tag.putInt("wine", wine_tag.getInt("wine"));
+                else wine_tag.putInt("wine", 3);
+
+                if (wine_tag.getInt("wine") >= 1) return;
+
+                it.getStackInSlot(i).shrink(1);
+                it.insertItem(i, wine.returnItem.getDefaultInstance(), false);
             }
         });
     }

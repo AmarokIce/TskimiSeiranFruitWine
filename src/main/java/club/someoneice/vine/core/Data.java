@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Data {
-    // 酒普
-    public static final Map<String, Wine> wineMap = new HashMap<>();
-
     // 酿造食谱
     public static final Map<Item, Wine> wineItemMap = new HashMap<>();
     public static final Map<TagKey<Item>, Wine> wineTagList = new HashMap<>();
